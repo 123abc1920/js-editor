@@ -49,7 +49,7 @@ footer {
     text-align: center;
 }
 
-.img>img{
+.img>img {
     height: 100%;
     width: auto;
 }
@@ -57,4 +57,9 @@ footer {
 .panel {
     background-color: cadetblue;
     margin: 0 10%;
+}
+
+#canvas {
+    height: 100%;
+    width: auto;
 }

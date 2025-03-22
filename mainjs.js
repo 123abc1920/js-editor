@@ -1,5 +1,10 @@
 let isDraw = false;
 let draw = false;
+let square = false;
+let ellips = false;
+let triangle = false;
+let line = false;
+
 var canvas = document.getElementById("canvas");
 canvas.width = 1000;
 canvas.height = 1000;
@@ -20,19 +25,39 @@ canvas.addEventListener("mousedown", function (e) {
 });
 
 canvas.addEventListener("mousemove", function (e) {
-    if (isDraw && draw) {
-        mouse.x = e.pageX - this.offsetLeft;
-        mouse.y = e.pageY - this.offsetTop;
-        ctx.lineTo(mouse.x, mouse.y);
-        ctx.stroke();
+    if (draw) {
+        if (isDraw) {
+            mouse.x = e.pageX - this.offsetLeft;
+            mouse.y = e.pageY - this.offsetTop;
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.stroke();
+        }
     }
 });
 
 canvas.addEventListener("mouseup", function (e) {
+    oldx = mouse.x;
+    oldy = mouse.y;
     mouse.x = e.pageX - this.offsetLeft;
     mouse.y = e.pageY - this.offsetTop;
-    if (isDraw && draw) {
-        ctx.lineTo(mouse.x, mouse.y);
+    if (draw) {
+        if (isDraw) {
+            ctx.lineTo(mouse.x, mouse.y);
+        }
+        if (square) {
+            var rectangle = new Path2D();
+            rectangle.rect(oldx, oldy, mouse.x - oldx, mouse.y - oldy);
+            ctx.stroke(rectangle);
+        }
+        if (ellips) {
+            var circle = new Path2D();
+            circle.arc(oldx, oldy, mouse.x - oldx, 0, 2 * Math.PI);
+            ctx.stroke(circle);
+        }
+        if (line) {
+            ctx.moveTo(oldx, oldy);
+            ctx.lineTo(mouse.x, mouse.y);
+        }
     }
     draw = false;
     ctx.stroke();
@@ -95,6 +120,18 @@ function openImg(url) {
     }
 }
 
-if (isDraw) {
+function drawSquare(event) {
+    square = !square;
+}
 
+function drawEllips(event) {
+    ellips = !ellips;
+}
+
+function drawTriangle(event) {
+    triangle = !triangle;
+}
+
+function drawLine(event) {
+    line = !line;
 }

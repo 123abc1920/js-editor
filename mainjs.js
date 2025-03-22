@@ -51,6 +51,14 @@ function openFile(event) {
 
 function newFile(event) {
     event.preventDefault();
+    canvas.width = 1000;
+    canvas.height = 1000;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 function saveFile(event) {

@@ -5,6 +5,10 @@ let ellips = false;
 let line = false;
 var mouse = { x: 0, y: 0 };
 var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+const undo = [];
+const redo = [];
 
 canvas.addEventListener("mousedown", function (e) {
     mouse.x = e.pageX - this.offsetLeft;
@@ -12,6 +16,10 @@ canvas.addEventListener("mousedown", function (e) {
     drawMode = true;
     ctx.beginPath();
     ctx.moveTo(mouse.x, mouse.y);
+    if (touching) {
+        undo.push(new CustomLine());
+        redo.length = 0;
+    }
 });
 
 canvas.addEventListener("mousemove", function (e) {
@@ -21,6 +29,7 @@ canvas.addEventListener("mousemove", function (e) {
             mouse.y = e.pageY - this.offsetTop;
             ctx.lineTo(mouse.x, mouse.y);
             ctx.stroke();
+            undo[undo.length - 1].addDot(mouse.x, mouse.y);
         }
     }
 });
@@ -33,6 +42,7 @@ canvas.addEventListener("mouseup", function (e) {
     if (drawMode) {
         if (touching) {
             ctx.lineTo(mouse.x, mouse.y);
+            undo[undo.length - 1].addDot(mouse.x, mouse.y);
         }
         if (square) {
             var rectangle = new Path2D();
@@ -80,4 +90,26 @@ function drawLine(event) {
     ellips = false;
     square = false;
 
+}
+
+function repaint() {
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    for (const item of undo) {
+        item.drawObject(ctx);
+    }
+}
+
+function unDo(event) {
+    if (undo.length != 0) {
+        redo.push(undo.pop());
+        repaint();
+    }
+}
+
+function reDo(event) {
+    if (redo.length != 0) {
+        undo.push(redo.pop());
+        repaint();
+    }
 }

@@ -2,7 +2,6 @@ let isDraw = false;
 let draw = false;
 let square = false;
 let ellips = false;
-let triangle = false;
 let line = false;
 
 var canvas = document.getElementById("canvas");
@@ -51,7 +50,8 @@ canvas.addEventListener("mouseup", function (e) {
         }
         if (ellips) {
             var circle = new Path2D();
-            circle.arc(oldx, oldy, mouse.x - oldx, 0, 2 * Math.PI);
+            r = Math.abs(mouse.x - oldx);
+            circle.arc(oldx + 0.5 * r, oldy + 0.5 * r, r, 0, 2 * Math.PI);
             ctx.stroke(circle);
         }
         if (line) {
@@ -122,16 +122,21 @@ function openImg(url) {
 
 function drawSquare(event) {
     square = !square;
+    isDraw = false;
+    ellips = false;
+    line = false;
 }
 
 function drawEllips(event) {
     ellips = !ellips;
-}
-
-function drawTriangle(event) {
-    triangle = !triangle;
+    isDraw = false;
+    line = false;
+    square = false;
 }
 
 function drawLine(event) {
     line = !line;
+    ellips = false;
+    square = false;
+
 }

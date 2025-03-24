@@ -1,9 +1,3 @@
-let isDraw = false;
-let draw = false;
-let square = false;
-let ellips = false;
-let line = false;
-
 var canvas = document.getElementById("canvas");
 canvas.width = 1000;
 canvas.height = 1000;
@@ -13,55 +7,6 @@ canvas.height = rect.height;
 var ctx = canvas.getContext("2d");
 ctx.fillStyle = "white";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
-var mouse = { x: 0, y: 0 };
-
-canvas.addEventListener("mousedown", function (e) {
-    mouse.x = e.pageX - this.offsetLeft;
-    mouse.y = e.pageY - this.offsetTop;
-    draw = true;
-    ctx.beginPath();
-    ctx.moveTo(mouse.x, mouse.y);
-});
-
-canvas.addEventListener("mousemove", function (e) {
-    if (draw) {
-        if (isDraw) {
-            mouse.x = e.pageX - this.offsetLeft;
-            mouse.y = e.pageY - this.offsetTop;
-            ctx.lineTo(mouse.x, mouse.y);
-            ctx.stroke();
-        }
-    }
-});
-
-canvas.addEventListener("mouseup", function (e) {
-    oldx = mouse.x;
-    oldy = mouse.y;
-    mouse.x = e.pageX - this.offsetLeft;
-    mouse.y = e.pageY - this.offsetTop;
-    if (draw) {
-        if (isDraw) {
-            ctx.lineTo(mouse.x, mouse.y);
-        }
-        if (square) {
-            var rectangle = new Path2D();
-            rectangle.rect(oldx, oldy, mouse.x - oldx, mouse.y - oldy);
-            ctx.stroke(rectangle);
-        }
-        if (ellips) {
-            var circle = new Path2D();
-            r = Math.abs(mouse.x - oldx);
-            circle.arc(oldx + 0.5 * r, oldy + 0.5 * r, r, 0, 2 * Math.PI);
-            ctx.stroke(circle);
-        }
-        if (line) {
-            ctx.moveTo(oldx, oldy);
-            ctx.lineTo(mouse.x, mouse.y);
-        }
-    }
-    draw = false;
-    ctx.stroke();
-});
 
 function openFile(event) {
     event.preventDefault();
@@ -97,10 +42,6 @@ function saveFile(event) {
     document.body.removeChild(link);
 }
 
-function startDraw(event) {
-    isDraw = !isDraw;
-}
-
 function openImg(url) {
     const img = new Image();
     img.src = url;
@@ -118,25 +59,4 @@ function openImg(url) {
         ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height);
     }
-}
-
-function drawSquare(event) {
-    square = !square;
-    isDraw = false;
-    ellips = false;
-    line = false;
-}
-
-function drawEllips(event) {
-    ellips = !ellips;
-    isDraw = false;
-    line = false;
-    square = false;
-}
-
-function drawLine(event) {
-    line = !line;
-    ellips = false;
-    square = false;
-
 }

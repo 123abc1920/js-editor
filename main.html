@@ -61,7 +61,8 @@
                 <div class="col-sm advanced-tools">
                     <div id="color-picker" class="input-group colorpicker-component">
                         <div class="row">
-                            <input type="text" value="#ff0000" class="form-control" />
+                            <input id="color-picker-text" onchange="setNewColor(event, this.value);" type="text"
+                                value="#ff0000" class="form-control" />
                         </div>
                         <div class="row">
                             <span class="input-group-addon"></span>
@@ -78,13 +79,5 @@
     <script src="scripts/objects.js"></script>
     <script src="scripts/drawing.js"></script>
     <script src="scripts/files.js"></script>
-    <script src="scripts/unredo.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#color-picker').colorpicker({
-                inline: true,
-                container: true
-            });
-        });
-    </script>
+    <script src="scripts/penprefs.js"></script>
 </body>

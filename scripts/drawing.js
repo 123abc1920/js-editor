@@ -14,21 +14,22 @@ canvas.addEventListener("mousedown", function (e) {
     mouse.x = e.pageX - this.offsetLeft;
     mouse.y = e.pageY - this.offsetTop;
     drawMode = true;
+    ctx.strokeStyle = document.getElementById('color-picker-text').value;
     ctx.beginPath();
     ctx.moveTo(mouse.x, mouse.y);
     if (touching) {
-        undo.push(new CustomLine());
+        undo.push(new CustomLine(ctx.strokeStyle));
         redo.length = 0;
     }
     if (square) {
-        undo.push(new CustomSquare(mouse.x, mouse.y));
+        undo.push(new CustomSquare(mouse.x, mouse.y, ctx.strokeStyle));
         redo.length = 0;
     }
     if (ellips) {
         redo.length = 0;
     }
     if (line) {
-        undo.push(new CustomDirectLine(mouse.x, mouse.y));
+        undo.push(new CustomDirectLine(mouse.x, mouse.y, ctx.strokeStyle));
         redo.length = 0;
     }
     if (undo.length > 50) {
@@ -69,7 +70,7 @@ canvas.addEventListener("mouseup", function (e) {
             r = Math.abs(mouse.x - oldx);
             circle.arc(oldx + 0.5 * r, oldy + 0.5 * r, r, 0, 2 * Math.PI);
             ctx.stroke(circle);
-            undo.push(new CustomCircle(oldx + 0.5 * r, oldy + 0.5 * r));
+            undo.push(new CustomCircle(oldx + 0.5 * r, oldy + 0.5 * r, ctx.strokeStyle));
             undo[undo.length - 1].setSize(r, r);
         }
         if (line) {
@@ -80,6 +81,7 @@ canvas.addEventListener("mouseup", function (e) {
     }
     drawMode = false;
     ctx.stroke();
+    repaint();
 });
 
 function startDraw(event) {

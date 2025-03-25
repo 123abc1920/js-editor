@@ -8,6 +8,10 @@ var ctx = canvas.getContext("2d");
 ctx.fillStyle = "white";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+const undo = [];
+const redo = [];
+var img = null;
+
 function openFile(event) {
     event.preventDefault();
 
@@ -29,6 +33,8 @@ function newFile(event) {
     var ctx = canvas.getContext("2d");
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    undo.length = 0;
+    redo.length = 0;
 }
 
 function saveFile(event) {
@@ -43,7 +49,7 @@ function saveFile(event) {
 }
 
 function openImg(url) {
-    const img = new Image();
+    img = new Image();
     img.src = url;
     img.onload = () => {
         if (img.width >= 2 * img.height) {
@@ -59,4 +65,6 @@ function openImg(url) {
         ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height);
     }
+    undo.length = 0;
+    redo.length = 0;
 }

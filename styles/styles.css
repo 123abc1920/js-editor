@@ -30,8 +30,16 @@ header {
 
 .advanced-tools {
     background-color: brown;
-    max-width: 200px;
-    min-width: 200px;
+    max-width: 300px;
+    min-width: 300px;
+}
+
+.width-div {
+    max-width: 30%;
+}
+
+.fill-div {
+    max-width: 10%;
 }
 
 #canvas {

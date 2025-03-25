@@ -7,9 +7,6 @@ var mouse = { x: 0, y: 0 };
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
-const undo = [];
-const redo = [];
-
 canvas.addEventListener("mousedown", function (e) {
     mouse.x = e.pageX - this.offsetLeft;
     mouse.y = e.pageY - this.offsetTop;
@@ -116,6 +113,9 @@ function drawLine(event) {
 function repaint() {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (img != null) {
+        ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height);
+    }
     for (const item of undo) {
         item.drawObject(ctx);
     }

@@ -1,6 +1,8 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
+var fill = false;
+
 $(document).ready(function () {
     $('#color-picker').colorpicker({
         inline: true,
@@ -10,8 +12,11 @@ $(document).ready(function () {
 
 function setNewColor(event, color) {
     ctx.strokeStyle = color;
+    if (fill) {
+        ctx.fillStyle = color;
+    }
 }
 
-function setNewSize(event, width) {
-    ctx.lineWidth = width;
+function setFillColor(event, color) {
+    fill = !fill;
 }

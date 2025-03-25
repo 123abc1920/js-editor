@@ -8,6 +8,10 @@ $(document).ready(function () {
     });
 });
 
-function setNewColor(event, s) {
-    ctx.strokeStyle = s;
+function setNewColor(event, color) {
+    ctx.strokeStyle = color;
+}
+
+function setNewSize(event, width) {
+    ctx.lineWidth = width;
 }

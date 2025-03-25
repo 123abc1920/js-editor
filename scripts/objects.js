@@ -1,6 +1,7 @@
 class DrewObject {
-    constructor(color) {
+    constructor(color, width) {
         this.color = color;
+        this.width = width;
     }
 
     drawObject(ctx) { }
@@ -14,8 +15,8 @@ class Point {
 }
 
 class CustomLine extends DrewObject {
-    constructor(color) {
-        super(color);
+    constructor(color, width) {
+        super(color, width);
         this.dots = [];
     }
 
@@ -25,6 +26,7 @@ class CustomLine extends DrewObject {
 
     drawObject(ctx) {
         ctx.strokeStyle = this.color;
+        ctx.lineWidth = this.width;
         ctx.beginPath();
         ctx.moveTo(this.dots[0].x, this.dots[0].y);
 
@@ -37,8 +39,8 @@ class CustomLine extends DrewObject {
 }
 
 class CustomSquare extends DrewObject {
-    constructor(x, y, color) {
-        super(color);
+    constructor(x, y, color, width) {
+        super(color, width);
         this.start = new Point(x, y);
         this.size = null;
     }
@@ -49,6 +51,7 @@ class CustomSquare extends DrewObject {
 
     drawObject(ctx) {
         ctx.strokeStyle = this.color;
+        ctx.lineWidth = this.width;
         var rectangle = new Path2D();
         rectangle.rect(this.start.x, this.start.y, this.size.x, this.size.y);
         ctx.stroke(rectangle);
@@ -56,8 +59,8 @@ class CustomSquare extends DrewObject {
 }
 
 class CustomCircle extends DrewObject {
-    constructor(x, y, color) {
-        super(color);
+    constructor(x, y, color, width) {
+        super(color, width);
         this.start = new Point(x, y);
         this.size = null;
     }
@@ -68,6 +71,7 @@ class CustomCircle extends DrewObject {
 
     drawObject(ctx) {
         ctx.strokeStyle = this.color;
+        ctx.lineWidth = this.width;
         var circle = new Path2D();
         circle.arc(this.start.x, this.start.y, this.size.x, 0, 2 * Math.PI);
         ctx.stroke(circle);
@@ -75,8 +79,8 @@ class CustomCircle extends DrewObject {
 }
 
 class CustomDirectLine extends DrewObject {
-    constructor(x, y, color) {
-        super(color);
+    constructor(x, y, color, width) {
+        super(color, width);
         this.start = new Point(x, y);
         this.finish = null;
     }
@@ -87,6 +91,7 @@ class CustomDirectLine extends DrewObject {
 
     drawObject(ctx) {
         ctx.strokeStyle = this.color;
+        ctx.lineWidth = this.width;
         ctx.beginPath();
         ctx.moveTo(this.start.x, this.start.y);
         ctx.lineTo(this.finish.x, this.finish.y);

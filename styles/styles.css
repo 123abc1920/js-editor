@@ -1,53 +1,22 @@
-body,
-header,
-footer,
-main,
-div {
-    border: 1px solid transparent;
-    margin: 0;
-    padding: 0;
-}
-
 footer {
     background-color: #FFC8A8;
 }
 
-.header {
+header {
     background-color: #FFC8A8;
     color: white;
-    height: 5vh;
-    padding: 1vh 1vw;
-}
-
-.menu-btn {
-    display: inline;
-    margin-right: 5vw;
-}
-
-.main-place {
-    background-color: blueviolet;
-    margin: 0 10%;
-    height: 80vh;
-    display: flex;
-}
-
-.tools,
-.img,
-.advanced-tools {
-    display: inline-block;
 }
 
 .tools {
     background-color: aqua;
-    max-width: 60px;
-    min-width: 60px;
-    flex: 1;
+    max-width: 100px;
+    min-width: 100px;
 }
 
 .img {
     background-color: palevioletred;
-    flex: 1;
     text-align: center;
+    height: 85vh;
 }
 
 .img>img {
@@ -57,14 +26,12 @@ footer {
 
 .panel {
     background-color: cadetblue;
-    margin: 0 10%;
 }
 
 .advanced-tools {
     background-color: brown;
-    flex: 1;
     max-width: 200px;
-    min-width: 60px;
+    min-width: 200px;
 }
 
 #canvas {

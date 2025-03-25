@@ -12,37 +12,60 @@
 
 <body>
     <header>
-        <div class="header">
-            <p class="menu-btn">Js Editor</p>
-            <a class="menu-btn">jjjjjj</a>
-            <a class="menu-btn">jjkkkk</a>
-            <a class="menu-btn">jjllll</a>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <p>Js Editor</p>
+                </div>
+                <div class="col-sm">
+                    <a>jjjjjj</a>
+                </div>
+                <div class="col-sm">
+                    <a>jjkkkk</a>
+                </div>
+                <div class="col-sm">
+                    <a>jjllll</a>
+                </div>
+            </div>
         </div>
     </header>
     <main>
-        <div class="panel">
-            <a href="#" onclick="openFile(event);">Open</a>
-            <a href="#" onclick="newFile(event);">New</a>
-            <a href="#" onclick="saveFile(event);">Save</a>
-            <a href="#" onclick="unDo(event);">Undo</a>
-            <a href="#" onclick="reDo(event);">Redo</a>
-        </div>
-        <div class="main-place">
-            <div style="display: flex; flex: 1;">
-                <div class="tools">
+        <div class="container">
+            <div class="row panel">
+                <div class="col-sm">
+                    <a href="#" onclick="openFile(event);">Open</a>
+                </div>
+                <div class="col-sm">
+                    <a href="#" onclick="newFile(event);">New</a>
+                </div>
+                <div class="col-sm">
+                    <a href="#" onclick="saveFile(event);">Save</a>
+                </div>
+                <div class="col-sm">
+                    <a href="#" onclick="unDo(event);">Undo</a>
+                </div>
+                <div class="col-sm">
+                    <a href="#" onclick="reDo(event);">Redo</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm tools">
                     <a href="#" onclick="startDraw(event);">Рис</a>
                     <a href="#" onclick="drawSquare(event);">прям</a>
                     <a href="#" onclick="drawEllips(event);">круг</a>
                     <a href="#" onclick="drawLine(event);">линия</a>
-                    <a href="#" onclick="drawLine(event);">толщина</a>
                 </div>
-                <div class="img">
+                <div class="col-sm img">
                     <canvas id="canvas"></canvas>
                 </div>
-                <div class="advanced-tools">
+                <div class="col-sm advanced-tools">
                     <div id="color-picker" class="input-group colorpicker-component">
-                        <input type="text" value="#ff0000" class="form-control" />
-                        <span class="input-group-addon"></span>
+                        <div class="row">
+                            <input type="text" value="#ff0000" class="form-control" />
+                        </div>
+                        <div class="row">
+                            <span class="input-group-addon"></span>
+                        </div>
                     </div>
                 </div>
             </div>

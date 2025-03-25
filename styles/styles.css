@@ -32,7 +32,8 @@ footer {
 }
 
 .tools,
-.img {
+.img,
+.advanced-tools {
     display: inline-block;
 }
 
@@ -57,6 +58,13 @@ footer {
 .panel {
     background-color: cadetblue;
     margin: 0 10%;
+}
+
+.advanced-tools {
+    background-color: brown;
+    flex: 1;
+    max-width: 200px;
+    min-width: 60px;
 }
 
 #canvas {

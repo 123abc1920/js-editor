@@ -17,6 +17,6 @@ function setNewColor(event, color) {
     }
 }
 
-function setFillColor(event, color) {
+function setFill(event) {
     fill = !fill;
 }

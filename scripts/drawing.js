@@ -13,6 +13,9 @@ canvas.addEventListener("mousedown", function (e) {
     drawMode = true;
     ctx.strokeStyle = document.getElementById('color-picker-text').value;
     ctx.lineWidth = document.getElementById('width-picker').value;
+    if (fill) {
+        ctx.fillStyle = document.getElementById('color-picker-text').value;
+    }
     ctx.beginPath();
     ctx.moveTo(mouse.x, mouse.y);
     if (touching) {
@@ -20,7 +23,7 @@ canvas.addEventListener("mousedown", function (e) {
         redo.length = 0;
     }
     if (square) {
-        undo.push(new CustomSquare(mouse.x, mouse.y, ctx.strokeStyle, ctx.lineWidth));
+        undo.push(new CustomSquare(mouse.x, mouse.y, ctx.strokeStyle, ctx.lineWidth, fill));
         redo.length = 0;
     }
     if (ellips) {
@@ -61,6 +64,9 @@ canvas.addEventListener("mouseup", function (e) {
             var rectangle = new Path2D();
             rectangle.rect(oldx, oldy, mouse.x - oldx, mouse.y - oldy);
             ctx.stroke(rectangle);
+            if (fill) {
+                ctx.fill(rectangle);
+            }
             undo[undo.length - 1].setSize(mouse.x - oldx, mouse.y - oldy);
         }
         if (ellips) {
@@ -68,7 +74,7 @@ canvas.addEventListener("mouseup", function (e) {
             r = Math.abs(mouse.x - oldx);
             circle.arc(oldx + 0.5 * r, oldy + 0.5 * r, r, 0, 2 * Math.PI);
             ctx.stroke(circle);
-            undo.push(new CustomCircle(oldx + 0.5 * r, oldy + 0.5 * r, ctx.strokeStyle, ctx.lineWidth));
+            undo.push(new CustomCircle(oldx + 0.5 * r, oldy + 0.5 * r, ctx.strokeStyle, ctx.lineWidth, fill));
             undo[undo.length - 1].setSize(r, r);
         }
         if (line) {

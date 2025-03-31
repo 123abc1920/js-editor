@@ -20,3 +20,9 @@ function setNewColor(event, color) {
 function setFill(event) {
     fill = !fill;
 }
+
+function setNewSize(event, width) {
+    document.getElementById('width-picker').value = width;
+    document.getElementById('width-text').value = width;
+    ctx.lineWidth = width;
+}

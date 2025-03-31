@@ -3,6 +3,7 @@ let drawMode = false;
 let square = false;
 let ellips = false;
 let line = false;
+let checkColor = false;
 var mouse = { x: 0, y: 0 };
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
@@ -35,6 +36,18 @@ canvas.addEventListener("mousedown", function (e) {
     }
     if (undo.length > 50) {
         undo.shift();
+    }
+    if (checkColor) {
+        var imgData = ctx.getImageData(mouse.x, mouse.y, 1, 1);
+        red = imgData.data[0];
+        green = imgData.data[1];
+        blue = imgData.data[2];
+        alpha = imgData.data[3];
+        color = "rgb(" + red + ", " + green + ", " + blue + ")";
+        colorAlpha = "rgb(" + red + ", " + green + ", " + blue + ", " + alpha + ")";
+        $('#color-picker-text').val(color).colorpicker('setValue', color);
+        $('.input-group-addon').css('background-color', color);
+        ctx.strokeStyle = colorAlpha;
     }
 });
 
@@ -93,6 +106,7 @@ function startDraw(event) {
     ellips = false;
     line = false;
     square = false;
+    checkColor = false;
 }
 
 function drawSquare(event) {
@@ -100,6 +114,7 @@ function drawSquare(event) {
     touching = false;
     ellips = false;
     line = false;
+    checkColor = false;
 }
 
 function drawEllips(event) {
@@ -107,10 +122,20 @@ function drawEllips(event) {
     touching = false;
     line = false;
     square = false;
+    checkColor = false;
 }
 
 function drawLine(event) {
     line = !line;
+    ellips = false;
+    square = false;
+    touching = false;
+    checkColor = false;
+}
+
+function startCheckColor(event) {
+    checkColor = !checkColor;
+    line = false;
     ellips = false;
     square = false;
     touching = false;
@@ -125,6 +150,10 @@ function repaint() {
     for (const item of undo) {
         item.drawObject(ctx);
     }
+}
+
+function rgbaToHex(r, g, b, a) {
+    return "#" + r.toString(16) + g.toString(16) + b.toString(16);
 }
 
 function unDo(event) {

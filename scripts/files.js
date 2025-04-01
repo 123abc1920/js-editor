@@ -8,8 +8,6 @@ var ctx = canvas.getContext("2d");
 ctx.fillStyle = "white";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-const undo = [];
-const redo = [];
 var img = null;
 
 function openFile(event) {

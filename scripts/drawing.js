@@ -151,21 +151,3 @@ function repaint() {
         item.drawObject(ctx);
     }
 }
-
-function rgbaToHex(r, g, b, a) {
-    return "#" + r.toString(16) + g.toString(16) + b.toString(16);
-}
-
-function unDo(event) {
-    if (undo.length != 0) {
-        redo.push(undo.pop());
-        repaint();
-    }
-}
-
-function reDo(event) {
-    if (redo.length != 0) {
-        undo.push(redo.pop());
-        repaint();
-    }
-}

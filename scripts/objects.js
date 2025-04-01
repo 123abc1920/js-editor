@@ -13,6 +13,10 @@ class Point {
         this.x = x;
         this.y = y;
     }
+
+    equals(other) {
+        return (other.x == this.x && other.y == this.y) ? true : false;
+    }
 }
 
 class CustomLine extends DrewObject {
@@ -105,5 +109,33 @@ class CustomDirectLine extends DrewObject {
         ctx.moveTo(this.start.x, this.start.y);
         ctx.lineTo(this.finish.x, this.finish.y);
         ctx.stroke();
+    }
+}
+
+class CustomCover extends DrewObject {
+    constructor(color, width) {
+        super(color, width, false);
+        this.points = []
+    }
+
+    addPoint(p) {
+        this.points.push(p);
+    }
+
+    drawObject(ctx) {
+        ctx.fillStyle = this.color;
+        ctx.lineWidth = this.width;
+        const imageData = ctx.createImageData(canvas.width, canvas.height);
+        const data = imageData.data;
+
+        this.points.forEach(function (item) {
+            const index = (item.y * canvas.width + item.x) * 4;
+            data[index] = 255;
+            data[index + 1] = 0;
+            data[index + 2] = 0;
+            data[index + 3] = 255;
+        });
+
+        ctx.putImageData(imageData, 0, 0);
     }
 }

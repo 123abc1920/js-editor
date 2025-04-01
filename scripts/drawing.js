@@ -4,6 +4,7 @@ let square = false;
 let ellips = false;
 let line = false;
 let checkColor = false;
+let cover = false;
 var mouse = { x: 0, y: 0 };
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
@@ -34,20 +35,30 @@ canvas.addEventListener("mousedown", function (e) {
         undo.push(new CustomDirectLine(mouse.x, mouse.y, ctx.strokeStyle, ctx.lineWidth));
         redo.length = 0;
     }
-    if (undo.length > 50) {
-        undo.shift();
-    }
     if (checkColor) {
         var imgData = ctx.getImageData(mouse.x, mouse.y, 1, 1);
-        red = imgData.data[0];
-        green = imgData.data[1];
-        blue = imgData.data[2];
-        alpha = imgData.data[3];
-        color = "rgb(" + red + ", " + green + ", " + blue + ")";
-        colorAlpha = "rgb(" + red + ", " + green + ", " + blue + ", " + alpha + ")";
+        var red = imgData.data[0];
+        var green = imgData.data[1];
+        var blue = imgData.data[2];
+        var alpha = imgData.data[3];
+        var color = "rgb(" + red + ", " + green + ", " + blue + ")";
+        var colorAlpha = "rgb(" + red + ", " + green + ", " + blue + ", " + alpha + ")";
         $('#color-picker-text').val(color).colorpicker('setValue', color);
         $('.input-group-addon').css('background-color', color);
         ctx.strokeStyle = colorAlpha;
+    }
+    if (cover) {
+        var imgData = ctx.getImageData(mouse.x, mouse.y, 1, 1);
+        var red = imgData.data[0];
+        var green = imgData.data[1];
+        var blue = imgData.data[2];
+        var coverObj = new CustomCover(ctx.strokeStyle, ctx.lineWidth);
+        var dfs = new DFS(red, green, blue, coverObj, canvas.width, canvas.height);
+        dfs.dfs(mouse.x, mouse.y);
+        undo.push(coverObj);
+    }
+    if (undo.length > 50) {
+        undo.shift();
     }
 });
 
@@ -107,6 +118,7 @@ function startDraw(event) {
     line = false;
     square = false;
     checkColor = false;
+    cover = false;
 }
 
 function drawSquare(event) {
@@ -115,6 +127,7 @@ function drawSquare(event) {
     ellips = false;
     line = false;
     checkColor = false;
+    cover = false;
 }
 
 function drawEllips(event) {
@@ -123,6 +136,7 @@ function drawEllips(event) {
     line = false;
     square = false;
     checkColor = false;
+    cover = false;
 }
 
 function drawLine(event) {
@@ -131,10 +145,21 @@ function drawLine(event) {
     square = false;
     touching = false;
     checkColor = false;
+    cover = false;
 }
 
 function startCheckColor(event) {
     checkColor = !checkColor;
+    line = false;
+    ellips = false;
+    square = false;
+    touching = false;
+    cover = false;
+}
+
+function startCover(event) {
+    cover = !cover;
+    checkColor = false;
     line = false;
     ellips = false;
     square = false;

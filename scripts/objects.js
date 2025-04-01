@@ -15,7 +15,7 @@ class Point {
     }
 
     equals(other) {
-        return (other.x == this.x && other.y == this.y) ? true : false;
+        return (other.x === this.x && other.y === this.y);
     }
 }
 
@@ -125,17 +125,51 @@ class CustomCover extends DrewObject {
     drawObject(ctx) {
         ctx.fillStyle = this.color;
         ctx.lineWidth = this.width;
-        const imageData = ctx.createImageData(canvas.width, canvas.height);
-        const data = imageData.data;
 
+        var minx = canvas.width, miny = canvas.height, maxx = 0, maxy = 0;
         this.points.forEach(function (item) {
-            const index = (item.y * canvas.width + item.x) * 4;
-            data[index] = 255;
-            data[index + 1] = 0;
-            data[index + 2] = 0;
-            data[index + 3] = 255;
+            if (item.x < minx) {
+                minx = item.x;
+            }
+            if (item.y < miny) {
+                miny = item.y;
+            }
+            if (item.x > maxx) {
+                maxx = item.x;
+            }
+            if (item.y > maxy) {
+                maxy = item.y;
+            }
         });
 
-        ctx.putImageData(imageData, 0, 0);
+        const imageData = ctx.createImageData(maxx - minx + 1, maxy - miny + 1);
+        const data = imageData.data;
+
+        const hexToRgb = hex => {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            return [r, g, b];
+        };
+        var clr = hexToRgb(this.color);
+
+        this.pointsSet = new Set(this.points.map(point => point.toString()));
+        for (let i = minx; i < maxx; i++) {
+            for (let j = miny; j < maxy; j++) {
+                const index = (j * canvas.width + i) * 4;
+                data[index] = clr[0];
+                data[index + 1] = clr[1];
+                data[index + 2] = clr[2];
+                var p = new Point(i, j);
+                data[index + 3] = 255;
+
+                const exists = this.pointsSet.has(p.toString());
+                if (!exists) {
+                    data[index + 3] = 0;
+                }
+            }
+        }
+
+        ctx.putImageData(imageData, minx, miny);
     }
 }

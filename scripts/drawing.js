@@ -54,7 +54,7 @@ canvas.addEventListener("mousedown", function (e) {
         var blue = imgData.data[2];
         var coverObj = new CustomCover(ctx.strokeStyle, ctx.lineWidth);
         var dfs = new DFS(red, green, blue, coverObj, canvas.width, canvas.height);
-        dfs.dfs(mouse.x, mouse.y);
+        dfs.dfs(mouse.x, mouse.y, ctx);
         undo.push(coverObj);
     }
     if (undo.length > 50) {

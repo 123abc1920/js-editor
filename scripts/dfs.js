@@ -20,18 +20,20 @@ class DFS {
             if (this.marked.has(`${p.x},${p.y}`)) {
                 continue;
             }
+
+            this.marked.add(`${p.x},${p.y}`);
+            this.cover.addPoint(p);
+
             var imgData = ctx.getImageData(p.x, p.y, 1, 1).data;
             if (imgData[0] != this.probeColor[0] || imgData[1] != this.probeColor[1] || imgData[2] != this.probeColor[2]) {
                 continue;
             }
-
-            this.marked.add(`${p.x},${p.y}`);
-            this.cover.addPoint(p);
 
             stack.push(new Point(p.x + 1, p.y));
             stack.push(new Point(p.x - 1, p.y));
             stack.push(new Point(p.x, p.y - 1));
             stack.push(new Point(p.x, p.y + 1));
         }
+        this.cover.sorting();
     }
 }

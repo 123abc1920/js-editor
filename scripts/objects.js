@@ -122,6 +122,12 @@ class CustomCover extends DrewObject {
         this.points.push(p);
     }
 
+    sorting() {
+        this.points = this.points.sort(function viax(a, b) {
+            return b.y < a.y ? 1 : b.y > a.y ? -1 : 0;
+        });
+    }
+
     drawObject(ctx) {
         var minx = canvas.width, miny = canvas.height, maxx = 0, maxy = 0;
         this.points.forEach(function (item) {
@@ -139,8 +145,8 @@ class CustomCover extends DrewObject {
             }
         });
 
-        const imageData = ctx.createImageData(maxx - minx + 1, maxy - miny + 1);
-        const data = imageData.data;
+        //const imageData = ctx.createImageData(maxx - minx + 1, maxy - miny + 1);
+        //const data = imageData.data;
 
         const hexToRgb = hex => {
             const r = parseInt(hex.slice(1, 3), 16);
@@ -150,18 +156,14 @@ class CustomCover extends DrewObject {
         };
         var clr = hexToRgb(this.color);
 
-        var k = 0;
-        for (let i = minx - 1; i <= maxx + 1; i++) {
-            for (let j = miny - 1; j <= maxy + 1; j++) {
-                const index = k;
-                data[index] = clr[0];
-                data[index + 1] = clr[1];
-                data[index + 2] = clr[2];
-                data[index + 3] = clr[3];
-                k = k + 4;
-            }
-        }
-
-        ctx.putImageData(imageData, minx, miny);
+        const imageData = ctx.createImageData(1, 1);
+        const data = imageData.data;
+        data[0] = clr[0];
+        data[1] = clr[1];
+        data[2] = clr[2];
+        data[3] = clr[3];
+        this.points.forEach(function (item) {
+            ctx.putImageData(imageData, item.x, item.y);
+        });
     }
 }

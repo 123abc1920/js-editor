@@ -50,7 +50,7 @@ function openImg(url) {
     img = new Image();
     img.src = url;
     img.onload = () => {
-        if (img.width >= 2 * img.height) {
+        if (img.width > img.height) {
             canvas.setAttribute('style', 'height: auto; width: 100%;');
         } else {
             canvas.setAttribute('style', 'height: 100%; width: auto;');

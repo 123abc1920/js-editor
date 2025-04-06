@@ -15,15 +15,11 @@ header {
 
 .img {
     background-color: palevioletred;
-    text-align: center;
     height: 85vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1%;
-    width: 100%;
     overflow-y: scroll;
     overflow-x: scroll;
+    margin: 0;
+    padding: 0;
 }
 
 .panel {
@@ -50,7 +46,6 @@ header {
     max-width: 10%;
 }
 
-#canvas {
-    height: 100%;
-    width: auto;
+.canvas-tools {
+    background-color: darkgoldenrod;
 }

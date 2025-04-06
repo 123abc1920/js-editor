@@ -118,6 +118,16 @@
                     </div>
                 </div>
             </div>
+            <div class="row canvas-tools">
+                <div class="col-sm">
+                    <input type="range" class="form-range" id="size-picker" value="100" type="text" min="20" max="200"
+                        step="20" onchange="resizeCanvas(event, this.value);">
+                </div>
+                <div class="col-sm width-div">
+                    <input type="number" id="size-text" class="form-control" value="1"
+                        onchange="resizeCanvas(event, this.value);" />
+                </div>
+            </div>
         </div>
     </main>
     <footer>

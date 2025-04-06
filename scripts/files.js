@@ -49,20 +49,25 @@ function saveFile(event) {
 function openImg(url) {
     img = new Image();
     img.src = url;
+    canvas.width = 100;
+    canvas.height = 100;
     img.onload = () => {
-        var aspectRatio=img.width / img.height;
-        if (img.width / img.height <= 1) {
-            canvas.setAttribute('style', 'height: 100%; width: auto;');
-        } else {
-            canvas.setAttribute('style', 'height: auto; width: 100%;');
-        }
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const rect = canvas.getBoundingClientRect();
+        var imgPanel = document.getElementById("imgPanel");
+        const rect = imgPanel.getBoundingClientRect();
+
         canvas.width = rect.width;
         canvas.height = rect.height;
+
+        var scale = Math.min(rect.width / img.width, rect.height / img.height);
+
+        var newWidth = img.width * scale;
+        var newHeight = img.height * scale;
+
+        var xOffset = (rect.width - newWidth) / 2;
+        var yOffset = (rect.height - newHeight) / 2;
+
         ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, img.width, img.height, xOffset, yOffset, newWidth, newHeight);
     }
     undo.length = 0;
     redo.length = 0;

@@ -57,9 +57,6 @@ canvas.addEventListener("mousedown", function (e) {
         dfs.dfs(mouse.x, mouse.y, ctx);
         undo.push(coverObj);
     }
-    if (undo.length > 50) {
-        undo.shift();
-    }
 });
 
 canvas.addEventListener("mousemove", function (e) {
@@ -85,30 +82,19 @@ canvas.addEventListener("mouseup", function (e) {
             undo[undo.length - 1].addDot(mouse.x, mouse.y);
         }
         if (square) {
-            var rectangle = new Path2D();
-            rectangle.rect(oldx, oldy, mouse.x - oldx, mouse.y - oldy);
-            ctx.stroke(rectangle);
-            if (fill) {
-                ctx.fill(rectangle);
-            }
             undo[undo.length - 1].setSize(mouse.x - oldx, mouse.y - oldy);
         }
         if (ellips) {
-            var circle = new Path2D();
-            r = Math.abs(mouse.x - oldx);
-            circle.arc(oldx + 0.5 * r, oldy + 0.5 * r, r, 0, 2 * Math.PI);
-            ctx.stroke(circle);
-            undo.push(new CustomCircle(oldx + 0.5 * r, oldy + 0.5 * r, ctx.strokeStyle, ctx.lineWidth, fill));
-            undo[undo.length - 1].setSize(r, r);
+            var rx = Math.abs(mouse.x - oldx);
+            var ry = Math.abs(mouse.y - oldy);
+            undo.push(new CustomCircle(oldx + rx / 2, oldy + ry / 2, ctx.strokeStyle, ctx.lineWidth, fill));
+            undo[undo.length - 1].setSize(rx, ry);
         }
         if (line) {
-            ctx.moveTo(oldx, oldy);
-            ctx.lineTo(mouse.x, mouse.y);
             undo[undo.length - 1].setFinish(mouse.x, mouse.y);
         }
     }
     drawMode = false;
-    ctx.stroke();
     repaint();
 });
 

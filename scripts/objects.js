@@ -81,12 +81,12 @@ class CustomCircle extends DrewObject {
     drawObject(ctx) {
         ctx.strokeStyle = this.color;
         ctx.lineWidth = this.width;
-        var circle = new Path2D();
-        circle.arc(this.start.x, this.start.y, this.size.x, 0, 2 * Math.PI);
-        ctx.stroke(circle);
+        ctx.beginPath();
+        ctx.ellipse(this.start.x, this.start.y, this.size.x, this.size.y, 0, 0, 180);
+        ctx.stroke();
         if (this.isFill) {
             ctx.fillStyle = this.color;
-            ctx.fill(circle);
+            ctx.fill();
         }
     }
 }

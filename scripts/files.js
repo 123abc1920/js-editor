@@ -50,10 +50,11 @@ function openImg(url) {
     img = new Image();
     img.src = url;
     img.onload = () => {
-        if (img.width > img.height) {
-            canvas.setAttribute('style', 'height: auto; width: 100%;');
-        } else {
+        var aspectRatio=img.width / img.height;
+        if (img.width / img.height <= 1) {
             canvas.setAttribute('style', 'height: 100%; width: auto;');
+        } else {
+            canvas.setAttribute('style', 'height: auto; width: 100%;');
         }
         canvas.width = img.width;
         canvas.height = img.height;
@@ -65,4 +66,19 @@ function openImg(url) {
     }
     undo.length = 0;
     redo.length = 0;
+}
+
+function resizeCanvas() {
+    const canvasAspectRatio = canvas.width / canvas.height;
+    const windowAspectRatio = window.innerWidth / window.innerHeight;
+    const width = window.innerWidth;
+    const height = width / canvasAspectRatio;
+
+    if (windowAspectRatio < canvasAspectRatio) {
+        canvas.width = window.innerHeight * canvasAspectRatio;
+        canvas.height = window.innerHeight;
+    } else {
+        canvas.width = width;
+        canvas.height = height;
+    }
 }

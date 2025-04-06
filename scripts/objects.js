@@ -26,17 +26,17 @@ class CustomLine extends DrewObject {
     }
 
     addDot(x, y) {
-        this.dots.push(new Point(x, y));
+        this.dots.push(new Point(x / scalingCanvas, y / scalingCanvas));
     }
 
     drawObject(ctx) {
         ctx.strokeStyle = this.color;
         ctx.lineWidth = this.width;
         ctx.beginPath();
-        ctx.moveTo(this.dots[0].x, this.dots[0].y);
+        ctx.moveTo(this.dots[0].x * scalingCanvas, this.dots[0].y * scalingCanvas);
 
         for (const dot of this.dots) {
-            ctx.lineTo(dot.x, dot.y);
+            ctx.lineTo(dot.x * scalingCanvas, dot.y * scalingCanvas);
         }
 
         ctx.stroke();
@@ -46,19 +46,19 @@ class CustomLine extends DrewObject {
 class CustomSquare extends DrewObject {
     constructor(x, y, color, width, isFill) {
         super(color, width, isFill);
-        this.start = new Point(x, y);
+        this.start = new Point(x / scalingCanvas, y / scalingCanvas);
         this.size = null;
     }
 
     setSize(w, h) {
-        this.size = new Point(w, h);
+        this.size = new Point(w / scalingCanvas, h / scalingCanvas);
     }
 
     drawObject(ctx) {
         ctx.strokeStyle = this.color;
         ctx.lineWidth = this.width;
         var rectangle = new Path2D();
-        rectangle.rect(this.start.x, this.start.y, this.size.x, this.size.y);
+        rectangle.rect(this.start.x * scalingCanvas, this.start.y * scalingCanvas, this.size.x * scalingCanvas, this.size.y * scalingCanvas);
         ctx.stroke(rectangle);
         if (this.isFill) {
             ctx.fillStyle = this.color;
@@ -70,19 +70,19 @@ class CustomSquare extends DrewObject {
 class CustomCircle extends DrewObject {
     constructor(x, y, color, width, isFill) {
         super(color, width, isFill);
-        this.start = new Point(x, y);
+        this.start = new Point(x / scalingCanvas, y / scalingCanvas);
         this.size = null;
     }
 
     setSize(w, h) {
-        this.size = new Point(w, h);
+        this.size = new Point(w / scalingCanvas, h / scalingCanvas);
     }
 
     drawObject(ctx) {
         ctx.strokeStyle = this.color;
         ctx.lineWidth = this.width;
         ctx.beginPath();
-        ctx.ellipse(this.start.x, this.start.y, this.size.x, this.size.y, 0, 0, 180);
+        ctx.ellipse(this.start.x * scalingCanvas, this.start.y * scalingCanvas, this.size.x * scalingCanvas, this.size.y * scalingCanvas, 0, 0, 180);
         ctx.stroke();
         if (this.isFill) {
             ctx.fillStyle = this.color;
@@ -94,20 +94,20 @@ class CustomCircle extends DrewObject {
 class CustomDirectLine extends DrewObject {
     constructor(x, y, color, width) {
         super(color, width, false);
-        this.start = new Point(x, y);
+        this.start = new Point(x / scalingCanvas, y / scalingCanvas);
         this.finish = null;
     }
 
     setFinish(x, y) {
-        this.finish = new Point(x, y);
+        this.finish = new Point(x / scalingCanvas, y / scalingCanvas);
     }
 
     drawObject(ctx) {
         ctx.strokeStyle = this.color;
         ctx.lineWidth = this.width;
         ctx.beginPath();
-        ctx.moveTo(this.start.x, this.start.y);
-        ctx.lineTo(this.finish.x, this.finish.y);
+        ctx.moveTo(this.start.x * scalingCanvas, this.start.y * scalingCanvas);
+        ctx.lineTo(this.finish.x * scalingCanvas, this.finish.y * scalingCanvas);
         ctx.stroke();
     }
 }
@@ -119,13 +119,7 @@ class CustomCover extends DrewObject {
     }
 
     addPoint(p) {
-        this.points.push(p);
-    }
-
-    sorting() {
-        this.points = this.points.sort(function viax(a, b) {
-            return b.y < a.y ? 1 : b.y > a.y ? -1 : 0;
-        });
+        this.points.push(new Point(p.x / scalingCanvas, p.y / scalingCanvas));
     }
 
     drawObject(ctx) {
@@ -145,9 +139,6 @@ class CustomCover extends DrewObject {
             }
         });
 
-        //const imageData = ctx.createImageData(maxx - minx + 1, maxy - miny + 1);
-        //const data = imageData.data;
-
         const hexToRgb = hex => {
             const r = parseInt(hex.slice(1, 3), 16);
             const g = parseInt(hex.slice(3, 5), 16);
@@ -163,7 +154,7 @@ class CustomCover extends DrewObject {
         data[2] = clr[2];
         data[3] = clr[3];
         this.points.forEach(function (item) {
-            ctx.putImageData(imageData, item.x, item.y);
+            ctx.putImageData(imageData, item.x * scalingCanvas, item.y * scalingCanvas);
         });
     }
 }

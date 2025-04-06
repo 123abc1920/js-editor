@@ -10,8 +10,9 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
 canvas.addEventListener("mousedown", function (e) {
-    mouse.x = e.pageX - this.offsetLeft;
-    mouse.y = e.pageY - this.offsetTop;
+    var BB = canvas.getBoundingClientRect();
+    mouse.x = parseInt(e.clientX - BB.left);
+    mouse.y = parseInt(e.clientY - BB.top);
     drawMode = true;
     ctx.strokeStyle = document.getElementById('color-picker-text').value;
     ctx.lineWidth = document.getElementById('width-picker').value;
@@ -62,8 +63,9 @@ canvas.addEventListener("mousedown", function (e) {
 canvas.addEventListener("mousemove", function (e) {
     if (drawMode) {
         if (touching) {
-            mouse.x = e.pageX - this.offsetLeft;
-            mouse.y = e.pageY - this.offsetTop;
+            var BB = canvas.getBoundingClientRect();
+            mouse.x = parseInt(e.clientX - BB.left);
+            mouse.y = parseInt(e.clientY - BB.top);
             ctx.lineTo(mouse.x, mouse.y);
             ctx.stroke();
             undo[undo.length - 1].addDot(mouse.x, mouse.y);
@@ -74,8 +76,9 @@ canvas.addEventListener("mousemove", function (e) {
 canvas.addEventListener("mouseup", function (e) {
     oldx = mouse.x;
     oldy = mouse.y;
-    mouse.x = e.pageX - this.offsetLeft;
-    mouse.y = e.pageY - this.offsetTop;
+    var BB = canvas.getBoundingClientRect();
+    mouse.x = parseInt(e.clientX - BB.left);
+    mouse.y = parseInt(e.clientY - BB.top);
     if (drawMode) {
         if (touching) {
             ctx.lineTo(mouse.x, mouse.y);

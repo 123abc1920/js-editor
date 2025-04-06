@@ -22,6 +22,7 @@ function openFile(event) {
 function newFile(event) {
     imgHeight = 1000;
     imgWidth = 1000;
+    img = null;
     const rect = imgPanel.getBoundingClientRect();
     var scale = Math.min(rect.width / imgWidth, rect.height / imgHeight);
     var newWidth;
@@ -97,10 +98,28 @@ function resizeCanvas(event, value) {
 
     var imgPanel = document.getElementById("imgPanel");
     const rect = imgPanel.getBoundingClientRect();
-    var newWidth = imgWidth * scalingCanvas;
-    var newHeight = imgHeight * scalingCanvas;
+    var rectWidth = rect.width * scalingCanvas;
+    var rectHeight = rect.height * scalingCanvas;
+    var scale = Math.min(rectWidth / imgWidth, rectHeight / imgHeight);
+    var newWidth;
+    var newHeight;
+    if (imgWidth > imgHeight) {
+        newWidth = rectWidth;
+        newHeight = imgHeight * scale;
+    } else if (imgWidth <= imgHeight) {
+        newHeight = rectHeight;
+        newWidth = imgWidth * scale;
+    }
+
     canvas.width = newWidth;
     canvas.height = newHeight;
     ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0, imgWidth, imgHeight, 0, 0, newWidth, newHeight);
+    if (img != null) {
+        ctx.drawImage(img, 0, 0, imgWidth, imgHeight, 0, 0, newWidth, newHeight);
+    } else {
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    repaint();
 }

@@ -34,6 +34,5 @@ class DFS {
             stack.push(new Point(p.x, p.y - 1));
             stack.push(new Point(p.x, p.y + 1));
         }
-        this.cover.sorting();
     }
 }

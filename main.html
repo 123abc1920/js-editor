@@ -116,15 +116,24 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <a href="#" onclick="mirrorY(event);">ОтразитьY</a>
+                    </div>
+                    <div class="row">
+                        <a href="#" onclick="mirrorX(event);">ОтразитьX</a>
+                    </div>
+                    <div class="row">
+                        <a href="#" onclick="rotate(event);">Повернуть</a>
+                    </div>
                 </div>
             </div>
-            <div class="row canvas-tools">
+            <div class=" row canvas-tools">
                 <div class="col-sm">
-                    <input type="range" class="form-range" id="size-picker" value="100" type="text" min="20" max="200"
-                        step="20" onchange="resizeCanvas(event, this.value);">
+                    <input type="range" class="form-range" id="size-picker" value="100" min="20" max="200" step="10"
+                        onchange="resizeCanvas(event, this.value);">
                 </div>
                 <div class="col-sm width-div">
-                    <input type="number" id="size-text" class="form-control" value="1"
+                    <input type="number" id="size-text" class="form-control" value="100" min="20" max="200" step="10"
                         onchange="resizeCanvas(event, this.value);" />
                 </div>
             </div>
@@ -136,6 +145,8 @@
 
     <script src="scripts/objects.js"></script>
     <script src="scripts/unredo.js"></script>
+    <script src="scripts/effects.js"></script>
+    <script src="scripts/transforms.js"></script>
     <script src="scripts/files.js"></script>
     <script src="scripts/penprefs.js"></script>
     <script src="scripts/drawing.js"></script>

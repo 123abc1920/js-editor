@@ -19,6 +19,26 @@ class Point {
     }
 }
 
+function prepareToDrawDot(x, y) {
+    if (mirroredX) {
+        x = canvas.width - x;
+    }
+    if (mirroredY) {
+        y = canvas.height - y;
+    }
+    return new Point(x * scalingCanvas, y * scalingCanvas);
+}
+
+function prepareToSaveDot(x, y) {
+    if (mirroredX) {
+        x = canvas.width - x;
+    }
+    if (mirroredY) {
+        y = canvas.height - y;
+    }
+    return new Point(x / scalingCanvas, y / scalingCanvas);
+}
+
 class CustomLine extends DrewObject {
     constructor(color, width) {
         super(color, width, false);
@@ -26,19 +46,22 @@ class CustomLine extends DrewObject {
     }
 
     addDot(x, y) {
-        this.dots.push(new Point(x / scalingCanvas, y / scalingCanvas));
+        var p = prepareToSaveDot(x, y);
+        this.dots.push(new Point(p.x, p.y));
     }
 
     drawObject(ctx) {
         ctx.strokeStyle = this.color;
         ctx.lineWidth = this.width;
         ctx.beginPath();
-        ctx.moveTo(this.dots[0].x * scalingCanvas, this.dots[0].y * scalingCanvas);
+
+        var startP = prepareToDrawDot(this.dots[0].x, this.dots[0].y);
+        ctx.moveTo(startP.x, startP.y);
 
         for (const dot of this.dots) {
-            ctx.lineTo(dot.x * scalingCanvas, dot.y * scalingCanvas);
+            var miniP = prepareToDrawDot(dot.x, dot.y);
+            ctx.lineTo(miniP.x, miniP.y);
         }
-
         ctx.stroke();
     }
 }
@@ -46,7 +69,7 @@ class CustomLine extends DrewObject {
 class CustomSquare extends DrewObject {
     constructor(x, y, color, width, isFill) {
         super(color, width, isFill);
-        this.start = new Point(x / scalingCanvas, y / scalingCanvas);
+        this.start = prepareToSaveDot(x, y);
         this.size = null;
     }
 
@@ -58,7 +81,8 @@ class CustomSquare extends DrewObject {
         ctx.strokeStyle = this.color;
         ctx.lineWidth = this.width;
         var rectangle = new Path2D();
-        rectangle.rect(this.start.x * scalingCanvas, this.start.y * scalingCanvas, this.size.x * scalingCanvas, this.size.y * scalingCanvas);
+        var newP = prepareToDrawDot(this.start.x, this.start.y);
+        rectangle.rect(newP.x, newP.y, this.size.x * scalingCanvas, this.size.y * scalingCanvas);
         ctx.stroke(rectangle);
         if (this.isFill) {
             ctx.fillStyle = this.color;
@@ -70,7 +94,7 @@ class CustomSquare extends DrewObject {
 class CustomCircle extends DrewObject {
     constructor(x, y, color, width, isFill) {
         super(color, width, isFill);
-        this.start = new Point(x / scalingCanvas, y / scalingCanvas);
+        this.start = prepareToSaveDot(x, y);
         this.size = null;
     }
 
@@ -82,7 +106,8 @@ class CustomCircle extends DrewObject {
         ctx.strokeStyle = this.color;
         ctx.lineWidth = this.width;
         ctx.beginPath();
-        ctx.ellipse(this.start.x * scalingCanvas, this.start.y * scalingCanvas, this.size.x * scalingCanvas, this.size.y * scalingCanvas, 0, 0, 180);
+        var newP = prepareToDrawDot(this.start.x, this.start.y);
+        ctx.ellipse(newP.x, newP.y, this.size.x * scalingCanvas, this.size.y * scalingCanvas, 0, 0, 180);
         ctx.stroke();
         if (this.isFill) {
             ctx.fillStyle = this.color;
@@ -94,20 +119,22 @@ class CustomCircle extends DrewObject {
 class CustomDirectLine extends DrewObject {
     constructor(x, y, color, width) {
         super(color, width, false);
-        this.start = new Point(x / scalingCanvas, y / scalingCanvas);
+        this.start = prepareToSaveDot(x, y);
         this.finish = null;
     }
 
     setFinish(x, y) {
-        this.finish = new Point(x / scalingCanvas, y / scalingCanvas);
+        this.finish = prepareToSaveDot(x, y);
     }
 
     drawObject(ctx) {
         ctx.strokeStyle = this.color;
         ctx.lineWidth = this.width;
         ctx.beginPath();
-        ctx.moveTo(this.start.x * scalingCanvas, this.start.y * scalingCanvas);
-        ctx.lineTo(this.finish.x * scalingCanvas, this.finish.y * scalingCanvas);
+        var newP = prepareToDrawDot(this.start.x, this.start.y);
+        ctx.moveTo(newP.x, newP.y);
+        newP = prepareToDrawDot(this.finish.x, this.finish.y);
+        ctx.lineTo(newP.x, newP.y);
         ctx.stroke();
     }
 }
@@ -119,7 +146,7 @@ class CustomCover extends DrewObject {
     }
 
     addPoint(p) {
-        this.points.push(new Point(p.x / scalingCanvas, p.y / scalingCanvas));
+        this.points.push(prepareToSaveDot(p.x, p.y));
     }
 
     drawObject(ctx) {
@@ -154,7 +181,8 @@ class CustomCover extends DrewObject {
         data[2] = clr[2];
         data[3] = clr[3];
         this.points.forEach(function (item) {
-            ctx.putImageData(imageData, item.x * scalingCanvas, item.y * scalingCanvas);
+            var newP = prepareToDrawDot(item.x, item.y);
+            ctx.putImageData(imageData, newP.x, newP.y);
         });
     }
 }

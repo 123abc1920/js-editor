@@ -91,6 +91,8 @@ function openImg(url) {
 }
 
 function resizeCanvas(event, value) {
+    value = Math.max(20, Math.min(value, 200));
+
     document.getElementById('size-picker').value = value;
     document.getElementById('size-text').value = value;
 

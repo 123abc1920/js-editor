@@ -37,6 +37,7 @@ header {
 .brushes {
     height: 20vh;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .width-div {

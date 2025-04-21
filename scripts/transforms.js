@@ -12,6 +12,12 @@ function mirrorX(event) {
     repaint();
 }
 
-function rotate(event) {
+function rotateLeft(event) {
+    rotateAngle = rotateAngle + Math.PI / 2;
+    repaint();
+}
 
+function rotateRight(event) {
+    rotateAngle = rotateAngle - Math.PI / 2;
+    repaint();
 }

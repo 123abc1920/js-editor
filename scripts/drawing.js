@@ -159,10 +159,13 @@ function repaint() {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     if (img != null) {
+        ctx.save();
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+        ctx.rotate(rotateAngle);
+        ctx.translate(-canvas.width / 2, -canvas.height / 2);
         if (!mirroredX && !mirroredY) {
             ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height);
         } else {
-            ctx.save();
             if (mirroredX && mirroredY) {
                 ctx.scale(-1, -1);
                 ctx.drawImage(img, 0, 0, img.width, img.height, -canvas.width, -canvas.height, canvas.width, canvas.height);
@@ -176,8 +179,8 @@ function repaint() {
                     ctx.drawImage(img, 0, 0, img.width, img.height, 0, -canvas.height, canvas.width, canvas.height);
                 }
             }
-            ctx.restore();
         }
+        ctx.restore();
     }
     for (const item of undo) {
         item.drawObject(ctx);

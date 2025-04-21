@@ -26,7 +26,11 @@ function prepareToDrawDot(x, y) {
     if (mirroredY) {
         y = canvas.height - y;
     }
-    return new Point(x * scalingCanvas, y * scalingCanvas);
+    xc = canvas.width / 2;
+    yc = canvas.height / 2;
+    xn = Math.round(xc + (x - xc) * Math.cos(rotateAngle) - (y - yc) * Math.sin(rotateAngle))
+    yn = Math.round(yc + (x - xc) * Math.sin(rotateAngle) + (y - yc) * Math.cos(rotateAngle))
+    return new Point(xn * scalingCanvas, yn * scalingCanvas);
 }
 
 function prepareToSaveDot(x, y) {
@@ -36,7 +40,11 @@ function prepareToSaveDot(x, y) {
     if (mirroredY) {
         y = canvas.height - y;
     }
-    return new Point(x / scalingCanvas, y / scalingCanvas);
+    xc = canvas.width / 2;
+    yc = canvas.height / 2;
+    xn = Math.round(xc + (x - xc) * Math.cos(-rotateAngle) - (y - yc) * Math.sin(-rotateAngle))
+    yn = Math.round(yc + (x - xc) * Math.sin(-rotateAngle) + (y - yc) * Math.cos(-rotateAngle))
+    return new Point(xn / scalingCanvas, yn / scalingCanvas);
 }
 
 class CustomLine extends DrewObject {
@@ -69,20 +77,24 @@ class CustomLine extends DrewObject {
 class CustomSquare extends DrewObject {
     constructor(x, y, color, width, isFill) {
         super(color, width, isFill);
-        this.start = prepareToSaveDot(x, y);
+        this.start = new Point(x, y);
+        this.center = new Point(0, 0);
         this.size = null;
     }
 
     setSize(w, h) {
         this.size = new Point(w / scalingCanvas, h / scalingCanvas);
+        this.center.x = this.start.x + this.size.x / 2;
+        this.center.y = this.start.y + this.size.y / 2;
+        this.center = prepareToSaveDot(this.center.x, this.center.y);
     }
 
     drawObject(ctx) {
         ctx.strokeStyle = this.color;
         ctx.lineWidth = this.width;
         var rectangle = new Path2D();
-        var newP = prepareToDrawDot(this.start.x, this.start.y);
-        rectangle.rect(newP.x, newP.y, this.size.x * scalingCanvas, this.size.y * scalingCanvas);
+        var newP = prepareToDrawDot(this.center.x, this.center.y);
+        rectangle.rect(newP.x - this.size.x / 2, newP.y - this.size.y / 2, this.size.x * scalingCanvas, this.size.y * scalingCanvas);
         ctx.stroke(rectangle);
         if (this.isFill) {
             ctx.fillStyle = this.color;

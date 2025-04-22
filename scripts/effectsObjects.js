@@ -1,6 +1,28 @@
-class GrayEffect extends DrewObject {
+class EffectObject extends DrewObject {
     constructor() {
         super(0, 0, false);
+        this.imageData = null;
+        this.coeff = scalingCanvas;
+    }
+
+    update() { }
+
+    drawObject(ctx) {
+        if (this.coeff != scalingCanvas) {
+            this.coeff = scalingCanvas;
+            this.update();
+        }
+        ctx.putImageData(this.imageData, 0, 0);
+    }
+}
+
+class GrayEffect extends EffectObject {
+    constructor() {
+        super();
+        this.update();
+    }
+
+    update() {
         let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         let red, green, blue, grayscale;
 
@@ -15,15 +37,15 @@ class GrayEffect extends DrewObject {
         }
         this.imageData = imageData;
     }
-
-    drawObject(ctx) {
-        ctx.putImageData(this.imageData, 0, 0);
-    }
 }
 
-class NoiseEffect extends DrewObject {
+class NoiseEffect extends EffectObject {
     constructor() {
-        super(0, 0, false);
+        super();
+        this.update();
+    }
+
+    update() {
         let imageData = ctx.createImageData(ctx.canvas.width, ctx.canvas.height);
         for (let i = 0; i < imageData.data.length; i += 4) {
             const color = Math.random() * 255;
@@ -34,19 +56,19 @@ class NoiseEffect extends DrewObject {
         }
         this.imageData = imageData;
     }
-
-    drawObject(ctx) {
-        ctx.putImageData(this.imageData, 0, 0);
-    }
 }
 
-class GlitchEffect extends DrewObject {
-    constructor() {
-        super(0, 0, false);
+class GlitchEffect extends EffectObject {
+    constructor(levels) {
+        super();
+        this.levels = levels;
+        this.update();
+    }
+
+    update() {
         this.offsetsx = []
         this.offsetsy = []
         this.imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        this.levels = 10;
 
         for (let i = 0; i < this.levels; i++) {
             const yOffset = Math.floor(Math.random() * canvas.height);
@@ -57,62 +79,86 @@ class GlitchEffect extends DrewObject {
     }
 
     drawObject(ctx) {
+        if (this.coeff != scalingCanvas) {
+            this.coeff = scalingCanvas;
+            this.update();
+        }
         for (let i = 0; i < this.levels; i++) {
             ctx.putImageData(this.imageData, this.offsetsx[i], this.offsetsy[i]);
         }
     }
 }
 
-class BrightnessEffect extends DrewObject {
-    constructor() {
-        super(0, 0, false);
+class BrightnessEffect extends EffectObject {
+    constructor(brightnessFactor) {
+        super();
+        this.brightnessFactor = brightnessFactor;
+        this.update();
+    }
+
+    update() {
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const data = imageData.data;
 
-        const brightnessFactor = 1.5;
-
         for (let i = 0; i < data.length; i += 4) {
-            data[i] = Math.min(data[i] * brightnessFactor, 255);
-            data[i + 1] = Math.min(data[i + 1] * brightnessFactor, 255);
-            data[i + 2] = Math.min(data[i + 2] * brightnessFactor, 255);
+            data[i] = Math.min(data[i] * this.brightnessFactor, 255);
+            data[i + 1] = Math.min(data[i + 1] * this.brightnessFactor, 255);
+            data[i + 2] = Math.min(data[i + 2] * this.brightnessFactor, 255);
         }
 
         this.imageData = imageData;
     }
-
-    drawObject(ctx) {
-        ctx.putImageData(this.imageData, 0, 0);
-    }
 }
 
-class ContrastEffect extends DrewObject {
-    constructor() {
-        super(0, 0, false);
+class ContrastEffect extends EffectObject {
+    constructor(contrast) {
+        super();
+        this.contrast = contrast;
+        this.update();
+    }
+
+    update() {
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const data = imageData.data;
-        let contrast = 10;
-        const factor = (259 * (contrast + 255)) / (255 * (259 - contrast));
+        const contrast_f = (259 * (this.contrast + 255)) / (255 * (259 - this.contrast));
 
         for (let i = 0; i < data.length; i += 4) {
-            data[i] = Math.min(Math.max(factor * (data[i] - 128) + 128, 0), 255);
-            data[i + 1] = Math.min(Math.max(factor * (data[i + 1] - 128) + 128, 0), 255);
-            data[i + 2] = Math.min(Math.max(factor * (data[i + 2] - 128) + 128, 0), 255);
+            let Red = data[i] / 255.0;
+            let Green = data[i + 1] / 255.0;
+            let Blue = data[i + 2] / 255.0;
+            Red = (((Red - 0.5) * this.contrast) + 0.5) * 255.0;
+            Green = (((Green - 0.5) * this.contrast) + 0.5) * 255.0;
+            Blue = (((Blue - 0.5) * this.contrast) + 0.5) * 255.0;
+
+            let iR = Red;
+            iR = iR > 255 ? 255 : iR;
+            iR = iR < 0 ? 0 : iR;
+            let iG = Green;
+            iG = iG > 255 ? 255 : iG;
+            iG = iG < 0 ? 0 : iG;
+            let iB = Blue;
+            iB = iB > 255 ? 255 : iB;
+            iB = iB < 0 ? 0 : iB;
+
+            data[i] = iR;
+            data[i + 1] = iG;
+            data[i + 2] = iB;
         }
 
         this.imageData = imageData;
     }
-
-    drawObject(ctx) {
-        ctx.putImageData(this.imageData, 0, 0);
-    }
 }
 
-class SaturationEffect extends DrewObject {
-    constructor() {
-        super(0, 0, false);
+class SaturationEffect extends EffectObject {
+    constructor(saturation) {
+        super();
+        this.saturation = saturation;
+        this.update();
+    }
+
+    update() {
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const data = imageData.data;
-        const saturation = 10;
 
         for (let i = 0; i < data.length; i += 4) {
             const r = data[i];
@@ -120,22 +166,22 @@ class SaturationEffect extends DrewObject {
             const b = data[i + 2];
             const avg = (r + g + b) / 3;
 
-            data[i] = avg + (r - avg) * saturation;
-            data[i + 1] = avg + (g - avg) * saturation;
-            data[i + 2] = avg + (b - avg) * saturation;
+            data[i] = avg + (r - avg) * this.saturation;
+            data[i + 1] = avg + (g - avg) * this.saturation;
+            data[i + 2] = avg + (b - avg) * this.saturation;
         }
 
         this.imageData = imageData;
     }
-
-    drawObject(ctx) {
-        ctx.putImageData(this.imageData, 0, 0);
-    }
 }
 
-class SepiaEffect extends DrewObject {
+class SepiaEffect extends EffectObject {
     constructor() {
-        super(0, 0, false);
+        super();
+        this.update();
+    }
+
+    update() {
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const data = imageData.data;
 
@@ -151,9 +197,5 @@ class SepiaEffect extends DrewObject {
 
 
         this.imageData = imageData;
-    }
-
-    drawObject(ctx) {
-        ctx.putImageData(this.imageData, 0, 0);
     }
 }

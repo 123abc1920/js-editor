@@ -161,23 +161,11 @@ class CustomCover extends DrewObject {
         this.points.push(prepareToSaveDot(p.x, p.y));
     }
 
-    drawObject(ctx) {
-        var minx = canvas.width, miny = canvas.height, maxx = 0, maxy = 0;
-        this.points.forEach(function (item) {
-            if (item.x < minx) {
-                minx = item.x;
-            }
-            if (item.y < miny) {
-                miny = item.y;
-            }
-            if (item.x > maxx) {
-                maxx = item.x;
-            }
-            if (item.y > maxy) {
-                maxy = item.y;
-            }
-        });
+    sort() {
+        this.points.sort((a, b) => a.y - b.y);
+    }
 
+    drawObject(ctx) {
         const hexToRgb = hex => {
             const r = parseInt(hex.slice(1, 3), 16);
             const g = parseInt(hex.slice(3, 5), 16);

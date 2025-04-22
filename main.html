@@ -142,16 +142,24 @@
                             <a href="#" onclick="noise(event);">Шум</a>
                         </div>
                         <div class="row">
-                            <a href="#" onclick="glitch(event);">Глитч</a>
+                            <a href="#" class="params-btn" onclick="glitch(event);">Глитч</a>
+                            <input type="number" class="params" id="glitch-param" value="10" min="5" max="20"
+                                step="1" />
                         </div>
                         <div class="row">
-                            <a href="#" onclick="bright(event);">Яркость</a>
+                            <a href="#" class="params-btn" onclick="bright(event);">Яркость</a>
+                            <input type="number" class="params" id="bright-param" value="1" min="0" max="2"
+                                step="0.1" />
                         </div>
                         <div class="row">
-                            <a href="#" onclick="contrast(event);">Контраст</a>
+                            <a href="#" class="params-btn" onclick="contrast(event);">Контраст</a>
+                            <input type="number" class="params" id="contrast-param" value="0" min="-20" max="20"
+                                step="1" />
                         </div>
                         <div class="row">
-                            <a href="#" onclick="saturation(event);">Насыщенность</a>
+                            <a href="#" class="params-btn" onclick="saturation(event);">Насыщенность</a>
+                            <input type="number" class="params" id="saturation-param" value="0" min="-20" max="20"
+                                step="1" />
                         </div>
                         <div class="row">
                             <a href="#" onclick="sepia(event);">Сепия</a>

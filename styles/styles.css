@@ -51,3 +51,11 @@ header {
 .canvas-tools {
     background-color: darkgoldenrod;
 }
+
+.params{
+    width: 30%;
+}
+
+.params-btn{
+    width: 70%;
+}

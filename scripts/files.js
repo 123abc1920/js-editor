@@ -1,7 +1,6 @@
 var canvas = document.getElementById("canvas");
 const rect = canvas.getBoundingClientRect();
 var ctx = canvas.getContext("2d");
-newFile(null);
 
 var scalingCanvas = 1;
 var img = null;
@@ -19,9 +18,21 @@ function openFile(event) {
     })
 }
 
-function newFile(event) {
-    imgHeight = 1000;
-    imgWidth = 1000;
+function showModal(event) {
+    let modal = new bootstrap.Modal(document.getElementById("newFileModal"));
+    modal.show();
+}
+
+function createFile() {
+    let width = document.getElementById("width").value;
+    let height = document.getElementById("height").value;
+    $('#newFileModal').modal('hide');
+    newFile(width, height);
+}
+
+function newFile(width, height) {
+    imgHeight = height;
+    imgWidth = width;
     img = null;
     const rect = imgPanel.getBoundingClientRect();
     var scale = Math.min(rect.width / imgWidth, rect.height / imgHeight);

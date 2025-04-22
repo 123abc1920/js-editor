@@ -48,15 +48,24 @@ function newFile(event) {
     redo.length = 0;
 }
 
-function saveFile(event) {
+function saveFile(event, type) {
     event.preventDefault();
-    const dataUrl = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.href = dataUrl;
-    link.download = 'image.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    let link = document.createElement('a');
+    if (type == "png") {
+        let dataUrl = canvas.toDataURL('image/png', 0.5);
+        link.href = dataUrl;
+        link.download = 'image.png';
+    }
+    if (type == "jpeg") {
+        let dataUrl = canvas.toDataURL('image/jpeg', 0.5);
+        link.href = dataUrl;
+        link.download = 'image.jpeg';
+    }
+    if (link) {
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 }
 
 function openImg(url) {

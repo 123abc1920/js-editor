@@ -4,8 +4,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/css/bootstrap-colorpicker.css"
         rel="stylesheet">
     <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/js/bootstrap-colorpicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.1/jspdf.umd.min.js"></script>
 
     <link rel="stylesheet" href="styles/styles.css">
 </head>
@@ -38,8 +40,16 @@
                 <div class="col-sm">
                     <a href="#" onclick="newFile(event);">New</a>
                 </div>
-                <div class="col-sm">
-                    <a href="#" onclick="saveFile(event);">Save</a>
+                <div class="col-sm dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Сохранить
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#" onclick="saveFile(event, 'png');">PNG</a>
+                        <a class="dropdown-item" href="#" onclick="saveFile(event, 'jpeg');">JPEG</a>
+                        <a class="dropdown-item" href="#" onclick="savePDF();">PDF</a>
+                    </div>
                 </div>
                 <div class="col-sm">
                     <a href="#" onclick="unDo(event);">Undo</a>
@@ -168,6 +178,15 @@
         <p>hhhh</p>
     </footer>
 
+    <script type="module">
+        const { jsPDF } = window.jspdf;
+        window.savePDF = function () {
+            const pdf = new jsPDF();
+            var canvas = document.getElementById("canvas");
+            pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0);
+            pdf.save('image.pdf');
+        }
+    </script>
     <script src="scripts/objects.js"></script>
     <script src="scripts/effectsObjects.js"></script>
     <script src="scripts/brushes.js"></script>

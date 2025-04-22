@@ -22,18 +22,18 @@ canvas.addEventListener("mousedown", function (e) {
     ctx.beginPath();
     ctx.moveTo(mouse.x, mouse.y);
     if (touching) {
-        undo.push(new CustomLine(ctx.strokeStyle, ctx.lineWidth));
+        undo.push(new CustomLine(ctx.strokeStyle, ctx.lineWidth, currentBrush));
         redo.length = 0;
     }
     if (square) {
-        undo.push(new CustomSquare(mouse.x, mouse.y, ctx.strokeStyle, ctx.lineWidth, fill));
+        undo.push(new CustomSquare(mouse.x, mouse.y, ctx.strokeStyle, ctx.lineWidth, fill, currentBrush));
         redo.length = 0;
     }
     if (ellips) {
         redo.length = 0;
     }
     if (line) {
-        undo.push(new CustomDirectLine(mouse.x, mouse.y, ctx.strokeStyle, ctx.lineWidth));
+        undo.push(new CustomDirectLine(mouse.x, mouse.y, ctx.strokeStyle, ctx.lineWidth, currentBrush));
         redo.length = 0;
     }
     if (checkColor) {
@@ -90,7 +90,7 @@ canvas.addEventListener("mouseup", function (e) {
         if (ellips) {
             var rx = Math.abs(mouse.x - oldx);
             var ry = Math.abs(mouse.y - oldy);
-            undo.push(new CustomCircle(oldx + rx / 2, oldy + ry / 2, ctx.strokeStyle, ctx.lineWidth, fill));
+            undo.push(new CustomCircle(oldx + rx / 2, oldy + ry / 2, ctx.strokeStyle, ctx.lineWidth, fill, currentBrush));
             undo[undo.length - 1].setSize(rx, ry);
         }
         if (line) {

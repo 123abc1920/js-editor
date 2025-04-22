@@ -1,8 +1,10 @@
 class DrewObject {
-    constructor(color, width, isFill) {
+    constructor(color, width, isFill, brush) {
         this.color = color;
         this.width = width;
         this.isFill = isFill;
+        this.brush = brush;
+        this.special = null;
     }
 
     drawObject(ctx) { }
@@ -48,8 +50,8 @@ function prepareToSaveDot(x, y) {
 }
 
 class CustomLine extends DrewObject {
-    constructor(color, width) {
-        super(color, width, false);
+    constructor(color, width, brush) {
+        super(color, width, false, brush);
         this.dots = [];
     }
 
@@ -59,25 +61,14 @@ class CustomLine extends DrewObject {
     }
 
     drawObject(ctx) {
-        ctx.strokeStyle = this.color;
-        ctx.lineWidth = this.width;
-        ctx.beginPath();
-
-        var startP = prepareToDrawDot(this.dots[0].x, this.dots[0].y);
-        ctx.moveTo(startP.x, startP.y);
-
-        for (const dot of this.dots) {
-            var miniP = prepareToDrawDot(dot.x, dot.y);
-            ctx.lineTo(miniP.x, miniP.y);
-        }
-        ctx.stroke();
+        this.brush.drawCustomLine(this, ctx);
     }
 }
 
 class CustomSquare extends DrewObject {
-    constructor(x, y, color, width, isFill) {
-        super(color, width, isFill);
-        this.start = new Point(x, y);
+    constructor(x, y, color, width, isFill, brush) {
+        super(color, width, isFill, brush);
+        this.start = prepareToSaveDot(x, y);
         this.center = new Point(0, 0);
         this.size = null;
     }
@@ -86,16 +77,14 @@ class CustomSquare extends DrewObject {
         this.size = new Point(w / scalingCanvas, h / scalingCanvas);
         this.center.x = this.start.x + this.size.x / 2;
         this.center.y = this.start.y + this.size.y / 2;
-        this.center = prepareToSaveDot(this.center.x, this.center.y);
+    }
+
+    getSize() {
+        return new Point(this.size.x * scalingCanvas, this.size.y * scalingCanvas);
     }
 
     drawObject(ctx) {
-        ctx.strokeStyle = this.color;
-        ctx.lineWidth = this.width;
-        var rectangle = new Path2D();
-        var newP = prepareToDrawDot(this.center.x, this.center.y);
-        rectangle.rect(newP.x - this.size.x / 2, newP.y - this.size.y / 2, this.size.x * scalingCanvas, this.size.y * scalingCanvas);
-        ctx.stroke(rectangle);
+        this.brush.drawSquare(this, ctx);
         if (this.isFill) {
             ctx.fillStyle = this.color;
             ctx.fill(rectangle);
@@ -104,8 +93,8 @@ class CustomSquare extends DrewObject {
 }
 
 class CustomCircle extends DrewObject {
-    constructor(x, y, color, width, isFill) {
-        super(color, width, isFill);
+    constructor(x, y, color, width, isFill, brush) {
+        super(color, width, isFill, brush);
         this.start = prepareToSaveDot(x, y);
         this.size = null;
     }
@@ -115,12 +104,7 @@ class CustomCircle extends DrewObject {
     }
 
     drawObject(ctx) {
-        ctx.strokeStyle = this.color;
-        ctx.lineWidth = this.width;
-        ctx.beginPath();
-        var newP = prepareToDrawDot(this.start.x, this.start.y);
-        ctx.ellipse(newP.x, newP.y, this.size.x * scalingCanvas, this.size.y * scalingCanvas, 0, 0, 180);
-        ctx.stroke();
+        this.brush.drawCircle(this, ctx);
         if (this.isFill) {
             ctx.fillStyle = this.color;
             ctx.fill();
@@ -129,8 +113,8 @@ class CustomCircle extends DrewObject {
 }
 
 class CustomDirectLine extends DrewObject {
-    constructor(x, y, color, width) {
-        super(color, width, false);
+    constructor(x, y, color, width, brush) {
+        super(color, width, false, brush);
         this.start = prepareToSaveDot(x, y);
         this.finish = null;
     }
@@ -140,20 +124,13 @@ class CustomDirectLine extends DrewObject {
     }
 
     drawObject(ctx) {
-        ctx.strokeStyle = this.color;
-        ctx.lineWidth = this.width;
-        ctx.beginPath();
-        var newP = prepareToDrawDot(this.start.x, this.start.y);
-        ctx.moveTo(newP.x, newP.y);
-        newP = prepareToDrawDot(this.finish.x, this.finish.y);
-        ctx.lineTo(newP.x, newP.y);
-        ctx.stroke();
+        this.brush.drawDirectLine(this, ctx);
     }
 }
 
 class CustomCover extends DrewObject {
     constructor(color, width) {
-        super(color, width, false);
+        super(color, width, false, null);
         this.points = []
     }
 

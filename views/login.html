@@ -27,7 +27,7 @@
                         <a onclick="location.href='/'">Главная</a>
                     </div>
                     <div class="col-sm">
-                        <a onclick="location.href='/login'">Профиль</a>
+                        <a onclick="location.href='/profile'">Профиль</a>
                     </div>
                 </div>
             </div>
@@ -35,7 +35,17 @@
     </header>
     <main>
         <div class="container">
-            
+            <form action="/profile" method="POST">
+                <div class="row">
+                    <label for="exampleInputEmail1" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="username" name="username" aria-describedby="name">
+                </div>
+                <div class="row">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="userpass" id="userpass">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
     </main>
     <footer>

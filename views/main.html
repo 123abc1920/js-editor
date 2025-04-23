@@ -1,0 +1,229 @@
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/css/bootstrap-colorpicker.css"
+        rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/js/bootstrap-colorpicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.5.0/sql-wasm.js"></script>
+
+    <link rel="stylesheet" href="../public/styles/style.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <p>Js Editor</p>
+                </div>
+                <div class="col-sm">
+                    <a>jjjjjj</a>
+                </div>
+                <div class="col-sm">
+                    <a>jjkkkk</a>
+                </div>
+                <div class="col-sm">
+                    <a>jjllll</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="row panel">
+                <div class="col-sm">
+                    <a href="#" onclick="openFile(event);">Open</a>
+                </div>
+                <div class="col-sm">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        onclick="showModal(event);">
+                        Новый
+                    </button>
+                </div>
+                <div class="col-sm dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Сохранить
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#" onclick="saveFile(event, 'png');">PNG</a>
+                        <a class="dropdown-item" href="#" onclick="saveFile(event, 'jpeg');">JPEG</a>
+                        <a class="dropdown-item" href="#" onclick="savePDF();">PDF</a>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <a href="#" onclick="unDo(event);">Undo</a>
+                </div>
+                <div class="col-sm">
+                    <a href="#" onclick="reDo(event);">Redo</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm tools">
+                    <a href="#" onclick="startDraw(event);">Рис</a>
+                    <a href="#" onclick="drawSquare(event);">прям</a>
+                    <a href="#" onclick="drawEllips(event);">круг</a>
+                    <a href="#" onclick="drawLine(event);">линия</a>
+                    <a href="#" onclick="startCheckColor(event);">пип</a>
+                    <a href="#" onclick="startCover(event);">зал</a>
+                </div>
+                <div class="col-sm img" id="imgPanel">
+                    <canvas id="canvas"></canvas>
+                </div>
+                <div class="col-sm advanced-tools">
+                    <div id="color-picker" class="input-group colorpicker-component">
+                        <div class="row">
+                            <input id="color-picker-text" onchange="setNewColor(event, this.value);" type="text"
+                                value="#DD0F20FF" class="form-control" />
+                        </div>
+                        <div class="row">
+                            <span class="input-group-addon"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p>Размер кисти</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <input type="range" class="form-range" id="width-picker" value="1"
+                                onchange="setNewSize(event, this.value);">
+                        </div>
+                        <div class="col-sm width-div">
+                            <input type="number" id="width-text" class="form-control" value="1"
+                                onchange="setNewSize(event, this.value);" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm fill-div">
+                            <input class="form-check-input" type="checkbox" value="" onchange="setFill(event);"
+                                id="flexCheckChecked">
+                        </div>
+                        <div class="col-sm">
+                            <p>Заливка фигуры</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="row">
+                            <p>Кисть</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm brushes" id="brushList">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p>Трансформации</p>
+                    </div>
+                    <div class="row">
+                        <a href="#" onclick="mirrorY(event);">ОтразитьY</a>
+                    </div>
+                    <div class="row">
+                        <a href="#" onclick="mirrorX(event);">ОтразитьX</a>
+                    </div>
+                    <div class="row">
+                        <a href="#" onclick="rotateLeft(event);">Повернуть влево</a>
+                    </div>
+                    <div class="row">
+                        <a href="#" onclick="rotateRight(event);">Повернуть вправо</a>
+                    </div>
+                    <div class="row">
+                        <p>Эффекты</p>
+                    </div>
+                    <div class="col-sm brushes">
+                        <div class="row">
+                            <a href="#" onclick="gray(event);">Серый</a>
+                        </div>
+                        <div class="row">
+                            <a href="#" onclick="noise(event);">Шум</a>
+                        </div>
+                        <div class="row">
+                            <a href="#" class="params-btn" onclick="glitch(event);">Глитч</a>
+                            <input type="number" class="params" id="glitch-param" value="10" min="5" max="20"
+                                step="1" />
+                        </div>
+                        <div class="row">
+                            <a href="#" class="params-btn" onclick="bright(event);">Яркость</a>
+                            <input type="number" class="params" id="bright-param" value="1" min="0" max="2"
+                                step="0.1" />
+                        </div>
+                        <div class="row">
+                            <a href="#" class="params-btn" onclick="contrast(event);">Контраст</a>
+                            <input type="number" class="params" id="contrast-param" value="0" min="-20" max="20"
+                                step="1" />
+                        </div>
+                        <div class="row">
+                            <a href="#" class="params-btn" onclick="saturation(event);">Насыщенность</a>
+                            <input type="number" class="params" id="saturation-param" value="0" min="-20" max="20"
+                                step="1" />
+                        </div>
+                        <div class="row">
+                            <a href="#" onclick="sepia(event);">Сепия</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row canvas-tools">
+                <div class="col-sm">
+                    <input type="range" class="form-range" id="size-picker" value="100" min="20" max="200" step="10"
+                        onchange="resizeCanvas(event, this.value);">
+                </div>
+                <div class="col-sm width-div">
+                    <input type="number" id="size-text" class="form-control" value="100" min="20" max="200" step="10"
+                        onchange="resizeCanvas(event, this.value);" />
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>hhhh</p>
+    </footer>
+
+    <div class="modal fade" id="newFileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Установить размер файла</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <textarea class="form-control" rows="1" id="width" placeholder="Ширина"></textarea>
+                    </div>
+                    <div class="row">
+                        <textarea class="form-control" rows="1" id="height" placeholder="Высота"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary" onclick="createFile();">Создать</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        const { jsPDF } = window.jspdf;
+        window.savePDF = function () {
+            const pdf = new jsPDF();
+            var canvas = document.getElementById("canvas");
+            pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0);
+            pdf.save('image.pdf');
+        }
+    </script>
+    <script src="../public/js/objects.js"></script>
+    <script src="../public/js/effectsObjects.js"></script>
+    <script src="../public/js/brushes.js"></script>
+    <script src="../public/js/unredo.js"></script>
+    <script src="../public/js/effects.js"></script>
+    <script src="../public/js/transforms.js"></script>
+    <script src="../public/js/files.js"></script>
+    <script src="../public/js/penprefs.js"></script>
+    <script src="../public/js/drawing.js"></script>
+    <script src="../public/js/dfs.js"></script>
+</body>

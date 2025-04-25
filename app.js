@@ -1,11 +1,13 @@
 const express = require("express");
 var path = require('path');
 const app = express();
+const cookieParser = require('cookie-parser');
 const Database = require('better-sqlite3');
 const db = new Database('mydatabase.db');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
+app.use(cookieParser());
 
 app.set('view engine', 'ejs');
 
@@ -21,9 +23,10 @@ app.post('/profile', (req, res) => {
     const rows = stmt.all(username, userpass);
 
     if (rows.length > 0) {
+        res.cookie('username', username, { maxAge: 86400000, httpOnly: true });
         res.sendFile(path.join(__dirname + '/views/profile.html'));
     } else {
-        res.redirect(`/login?trying=${true}`)
+        res.redirect(`/login?trying=${true}`);
     }
 });
 
@@ -48,7 +51,22 @@ app.post('/reqistr', (req, res) => {
 app.get('/login', (req, res) => {
     var trying = req.query.trying;
     if (!trying) {
-        res.render('login', { message: '' });
+        const username = req.cookies.username;
+        if (username) {
+            const stmt = db.prepare("SELECT * FROM users WHERE name=?");
+            const rows = stmt.all(username);
+            res.send(`
+                <form id="autoSubmitForm" action="/profile" method="POST">
+                    <input type="hidden" name="username" value="${username}">
+                    <input type="hidden" name="userpass" value="${rows[0].password}">
+                </form>
+                <script>
+                    document.getElementById('autoSubmitForm').submit();
+                </script>
+            `);
+        } else {
+            res.render('login', { message: '' });
+        }
     } else {
         res.render('login', { message: 'Неверный логин или пароль' });
     }

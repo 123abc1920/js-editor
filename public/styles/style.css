@@ -52,10 +52,21 @@ header {
     background-color: darkgoldenrod;
 }
 
-.params{
+.params {
     width: 30%;
 }
 
-.params-btn{
+.params-btn {
     width: 70%;
+}
+
+#photoContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.photo {
+    flex: 1 1 200px;
+    max-width: 200px;
 }

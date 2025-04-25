@@ -24,7 +24,8 @@ app.post('/profile', (req, res) => {
 
     if (rows.length > 0) {
         res.cookie('username', username, { maxAge: 86400000, httpOnly: true });
-        res.sendFile(path.join(__dirname + '/views/profile.html'));
+        const photos = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg"];
+        res.render('profile', { name: username, photos: photos });
     } else {
         res.redirect(`/login?trying=${true}`);
     }

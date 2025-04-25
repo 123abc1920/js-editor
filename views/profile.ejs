@@ -35,7 +35,18 @@
     </header>
     <main>
         <div class="container">
-            
+            <div class="row">
+                <p>
+                    Фотографии от <%=name %>
+                </p>
+            </div>
+            <div id="photoContainer">
+                <% photos.forEach(photo=> { %>
+                    <div class="photo">
+                        <img src="<%= photo %>" alt="Фотография">
+                    </div>
+                    <% }) %>
+            </div>
         </div>
     </main>
     <footer>

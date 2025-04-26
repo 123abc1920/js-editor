@@ -69,4 +69,11 @@ header {
 .photo {
     flex: 1 1 200px;
     max-width: 200px;
+    border: 1px;
+    outline: auto;
+}
+
+.photo img{
+    border: 1px;
+    outline: auto;
 }

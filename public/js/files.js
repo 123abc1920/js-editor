@@ -61,16 +61,33 @@ function newFile(width, height) {
 
 function saveFile(event, type) {
     event.preventDefault();
-    let link = document.createElement('a');
+    let link;
     if (type == "png") {
+        link = document.createElement('a');
         let dataUrl = canvas.toDataURL('image/png', 0.5);
         link.href = dataUrl;
         link.download = 'image.png';
     }
     if (type == "jpeg") {
+        link = document.createElement('a');
         let dataUrl = canvas.toDataURL('image/jpeg', 0.5);
         link.href = dataUrl;
         link.download = 'image.jpeg';
+    }
+    if (type == "server") {
+        let dataUrl = canvas.toDataURL('image/png', 0.5);
+        const form = document.createElement('form');
+        form.action = '/upload';
+        form.method = 'POST';
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.name = 'img';
+        input.value = dataUrl;
+
+        form.appendChild(input);
+        document.body.appendChild(form);
+        form.submit();
+        form.remove();
     }
     if (link) {
         document.body.appendChild(link);

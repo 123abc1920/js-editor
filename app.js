@@ -2,12 +2,16 @@ const express = require("express");
 var path = require('path');
 const app = express();
 const cookieParser = require('cookie-parser');
+const multer = require("multer");
+const fs = require('fs');
+
 const Database = require('better-sqlite3');
 const db = new Database('mydatabase.db');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 app.use(cookieParser());
+app.use(multer({ dest: "uploads" }).single("filedata"));
 
 app.set('view engine', 'ejs');
 
@@ -19,12 +23,17 @@ app.post('/profile', (req, res) => {
     const username = req.body.username;
     const userpass = req.body.userpass;
 
-    const stmt = db.prepare("SELECT * FROM users WHERE name=? AND password=?");
-    const rows = stmt.all(username, userpass);
+    let stmt = db.prepare("SELECT * FROM users WHERE name=? AND password=?");
+    let rows = stmt.all(username, userpass);
 
     if (rows.length > 0) {
-        res.cookie('username', username, { maxAge: 86400000, httpOnly: true });
-        const photos = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg"];
+        res.cookie('username', username, { maxAge: 86400000 });
+        let photos = [];
+        let stmt = db.prepare("SELECT * FROM photos WHERE name=?");
+        let rows = stmt.all(username);
+        rows.forEach(item => {
+            photos.push("uploads/" + item.photo);
+        });
         res.render('profile', { name: username, photos: photos });
     } else {
         res.redirect(`/login?trying=${true}`);
@@ -71,6 +80,29 @@ app.get('/login', (req, res) => {
     } else {
         res.render('login', { message: 'Неверный логин или пароль' });
     }
+});
+
+app.post("/upload", function (req, res, next) {
+    const imageData = req.body.img;
+    const base64Data = imageData.replace(/^data:image\/png;base64,/, '');
+
+    const date = new Date().toISOString().replace(/[:.-]/g, '');
+    const filename = `image_${date}.png`;
+    current_file = filename;
+    res.cookie('current_file', filename, { maxAge: 86400000 });
+
+    const filePath = path.join(__dirname, 'uploads', filename);
+    fs.writeFile(filePath, base64Data, 'base64', (err) => {
+        if (err) {
+            console.error(err);
+        }
+    });
+
+    const username = req.cookies.username;
+    const stmt = db.prepare('INSERT INTO photos (name, photo) VALUES (?, ?)');
+    stmt.run(username, filename);
+
+    res.redirect("/");
 });
 
 app.listen(3000);

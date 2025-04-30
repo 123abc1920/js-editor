@@ -34,7 +34,14 @@ app.post('/profile', (req, res) => {
         rows.forEach(item => {
             photos.push("uploads/" + item.photo);
         });
-        res.render('profile', { name: username, photos: photos });
+        let tripl = []
+        for (let i = 0; i < photos.length; i++) {
+            if (i % 5 == 0) {
+                tripl.push([]);
+            }
+            tripl[tripl.length - 1].push(photos[i]);
+        }
+        res.render('profile', { name: username, tripl: tripl });
     } else {
         res.redirect(`/login?trying=${true}`);
     }
@@ -137,6 +144,13 @@ app.post("/deletephoto", function (req, res) {
                     document.getElementById('autoSubmitForm').submit();
                 </script>
             `);
+});
+
+app.post("/openphoto", function (req, res) {
+    var filename = req.body.namephoto;
+    filename = filename.replace("uploads/", "")
+    res.cookie('current_file', filename, { maxAge: 86400000 });
+    res.redirect("/");
 });
 
 app.listen(3000);

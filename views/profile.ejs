@@ -47,18 +47,22 @@
                         onclick="document.cookie = 'username=; Max-Age=-1;'; return true;">Выйти</button>
                 </form>
             </div>
-            <div id="photoContainer">
-                <% photos.forEach(photo=> { %>
-                    <div class="photo">
-                        <img src="<%= photo %>" alt="Фотография">
+            <div>
+                <% tripl.forEach(tri=> { %>
+                    <div class="row">
+                        <% tri.forEach(photo=> { %>
+                            <div class="col-sm photo">
+                                <form method="post">
+                                    <input formaction="/deletephoto" type="submit" value="Удалить фото" />
+                                    <input formaction="/openphoto" type="submit" name="action" value="Открыть фото">
+                                    <textarea name="namephoto" style="display: none;"><%= photo %></textarea>
+                                    <img class="w-100 shadow-1-strong rounded mb-4" src="<%= photo %>" alt="Фотография">
+                                </form>
+                            </div>
+                            <% }); %>
                     </div>
-                    <form action="/deletephoto" method="post">
-                        <textarea name="namephoto"><%= photo %></textarea>
-                        <input type="submit" value="Удалить фото" />
-                    </form>
-                    <% }) %>
+                    <% }); %>
             </div>
-        </div>
     </main>
     <footer>
         <p>hhhh</p>

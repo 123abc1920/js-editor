@@ -60,20 +60,12 @@ header {
     width: 70%;
 }
 
-#photoContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.photo {
-    flex: 1 1 200px;
-    max-width: 200px;
-    border: 1px;
+.photo{
     outline: auto;
+    text-align: center;
+    align-content: center;
 }
 
 .photo img{
-    border: 1px;
     outline: auto;
 }

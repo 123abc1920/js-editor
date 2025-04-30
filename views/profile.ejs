@@ -39,12 +39,23 @@
                 <p>
                     Фотографии от <%=name %>
                 </p>
+                <form action="/delete" method="post">
+                    <button name="delete">Удалить профиль</button>
+                </form>
+                <form action="/login" method="get">
+                    <button name="logout"
+                        onclick="document.cookie = 'username=; Max-Age=-1;'; return true;">Выйти</button>
+                </form>
             </div>
             <div id="photoContainer">
                 <% photos.forEach(photo=> { %>
                     <div class="photo">
                         <img src="<%= photo %>" alt="Фотография">
                     </div>
+                    <form action="/deletephoto" method="post">
+                        <textarea name="namephoto"><%= photo %></textarea>
+                        <input type="submit" value="Удалить фото" />
+                    </form>
                     <% }) %>
             </div>
         </div>

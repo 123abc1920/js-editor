@@ -8,7 +8,7 @@ const fs = require('fs');
 const Database = require('better-sqlite3');
 const db = new Database('mydatabase.db');
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 app.use(express.static(__dirname));
 app.use(cookieParser());
 app.use(multer({ dest: "uploads" }).single("filedata"));
@@ -59,6 +59,7 @@ app.post('/reqistr', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
+    res.clearCookie('current_file');
     var trying = req.query.trying;
     if (!trying) {
         const username = req.cookies.username;
@@ -103,6 +104,39 @@ app.post("/upload", function (req, res, next) {
     stmt.run(username, filename);
 
     res.redirect("/");
+});
+
+app.post("/delete", function (req, res, next) {
+    const username = req.cookies.username;
+    var stmt = db.prepare('DELETE FROM photos WHERE name=?');
+    stmt.run(username);
+
+    stmt = db.prepare('DELETE FROM users WHERE name=?');
+    stmt.run(username);
+
+    res.clearCookie("username");
+    res.redirect("/login");
+});
+
+app.post("/deletephoto", function (req, res) {
+    var filename = req.body.namephoto;
+    filename = filename.replace("uploads/", "")
+
+    const username = req.cookies.username;
+    var stmt = db.prepare('DELETE FROM photos WHERE photo=?');
+    stmt.run(filename);
+
+    stmt = db.prepare("SELECT * FROM users WHERE name=?");
+    const rows = stmt.all(username);
+    res.send(`
+                <form id="autoSubmitForm" action="/profile" method="POST">
+                    <input type="hidden" name="username" value="${username}">
+                    <input type="hidden" name="userpass" value="${rows[0].password}">
+                </form>
+                <script>
+                    document.getElementById('autoSubmitForm').submit();
+                </script>
+            `);
 });
 
 app.listen(3000);

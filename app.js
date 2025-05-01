@@ -51,10 +51,11 @@ app.post('/reqistr', (req, res) => {
     const username = req.body.username;
     const userpass = req.body.userpass;
 
-    const stmt = db.prepare('INSERT INTO users (name, password) VALUES (?, ?)');
-    stmt.run(username, userpass);
+    try {
+        stmt = db.prepare('INSERT INTO users (name, password) VALUES (?, ?)');
+        stmt.run(username, userpass);
 
-    res.send(`
+        res.send(`
         <form id="autoSubmitForm" action="/profile" method="POST">
             <input type="hidden" name="username" value="${username}">
             <input type="hidden" name="userpass" value="${userpass}">
@@ -63,12 +64,16 @@ app.post('/reqistr', (req, res) => {
             document.getElementById('autoSubmitForm').submit();
         </script>
     `);
+    } catch (err) {
+        res.redirect(`/login?failed=${true}`);
+    }
 });
 
 app.get('/login', (req, res) => {
     res.clearCookie('current_file');
     var trying = req.query.trying;
-    if (!trying) {
+    var failed = req.query.failed;
+    if (!trying && !failed) {
         const username = req.cookies.username;
         if (username) {
             const stmt = db.prepare("SELECT * FROM users WHERE name=?");
@@ -86,7 +91,12 @@ app.get('/login', (req, res) => {
             res.render('login', { message: '' });
         }
     } else {
-        res.render('login', { message: 'Неверный логин или пароль' });
+        if (trying){
+            res.render('login', { message: 'Неверный логин или пароль' });
+        }
+        if (failed){
+            res.render('login', { message: 'Уже есть пользователь с таким именем' });
+        }
     }
 });
 

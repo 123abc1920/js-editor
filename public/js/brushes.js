@@ -84,33 +84,27 @@ class SmoothBrush extends SimpleBrush {
         var w = Math.abs(finP.x - startP.x);
         var h = Math.abs(finP.y - startP.y);
 
-        if (!obj.special || obj.special[0][0] != prepareToSaveDot(newP.x - w / 2, 0).x) {
+        if (!obj.special) {
             obj.special = [[], []]
             for (let i = newP.x - w / 2, k = 0; i < newP.x + w / 2; i += Math.random() * (w / 20), k++) {
-                obj.special[0].push(prepareToSaveDot(i, 0).x);
+                obj.special[0].push(prepareToSaveDot(i, startP.y).x);
             }
             for (let i = newP.y - h / 2, k = 0; i < newP.y + h / 2; i += Math.random() * (h / 20), k++) {
-                obj.special[1].push(prepareToSaveDot(i, 0).x);
+                obj.special[1].push(prepareToSaveDot(startP.x, i).y);
             }
         }
 
-        console.log(obj.special);
-
-        let start = Math.min(newP.x - w / 2, newP.x + w / 2);
-        let fin = Math.max(newP.x - w / 2, newP.x + w / 2);
-        for (let i = start, k = 0; i < fin; i = obj.special[0][k], k++) {
+        for (let k = 0; k < obj.special[0].length; k++) {
             ctx.beginPath();
-            ctx.ellipse(prepareToDrawDot(i, 0).x, newP.y - h / 2, obj.width, obj.width, 0, 0, 180);
-            ctx.ellipse(prepareToDrawDot(i, 0).x, newP.y + h / 2, obj.width, obj.width, 0, 0, 180);
+            ctx.ellipse(prepareToDrawDot(obj.special[0][k], startP.y).x, startP.y, obj.width, obj.width, 0, 0, 180);
+            ctx.ellipse(prepareToDrawDot(obj.special[0][k], startP.y).x, finP.y, obj.width, obj.width, 0, 0, 180);
             ctx.fill();
         }
 
-        start = Math.min(newP.y - h / 2, newP.y + h / 2);
-        fin = Math.max(newP.y - h / 2, newP.y + h / 2);
-        for (let i = start, k = 0; i < fin; i = obj.special[1][k], k++) {
+        for (let k = 0; k < obj.special[1].length; k++) {
             ctx.beginPath();
-            ctx.ellipse(newP.x - w / 2, prepareToDrawDot(i, 0).x, obj.width, obj.width, 0, 0, 180);
-            ctx.ellipse(newP.x + w / 2, prepareToDrawDot(i, 0).x, obj.width, obj.width, 0, 0, 180);
+            ctx.ellipse(startP.x, prepareToDrawDot(startP.x, obj.special[1][k]).y, obj.width, obj.width, 0, 0, 180);
+            ctx.ellipse(finP.x, prepareToDrawDot(startP.x, obj.special[1][k]).y, obj.width, obj.width, 0, 0, 180);
             ctx.fill();
         }
     }*/

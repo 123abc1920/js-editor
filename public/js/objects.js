@@ -21,32 +21,45 @@ class Point {
     }
 }
 
-function prepareToDrawDot(x, y) {
+function prepareToDrawDot(originalX, originalY) {
+    var xc = canvas.width / 2;
+    var yc = canvas.height / 2;
+
+    let x = originalX * scalingCanvas;
+    let y = originalY * scalingCanvas;
     if (mirroredX) {
         x = canvas.width - x;
     }
     if (mirroredY) {
         y = canvas.height - y;
     }
-    xc = canvas.width / 2;
-    yc = canvas.height / 2;
-    xn = Math.round(xc + (x - xc) * Math.cos(rotateAngle) - (y - yc) * Math.sin(rotateAngle))
-    yn = Math.round(yc + (x - xc) * Math.sin(rotateAngle) + (y - yc) * Math.cos(rotateAngle))
-    return new Point(xn * scalingCanvas, yn * scalingCanvas);
+
+    let xn = Math.round(xc + (x - xc) * Math.cos(rotateAngle) - (y - yc) * Math.sin(rotateAngle));
+    let yn = Math.round(yc + (x - xc) * Math.sin(rotateAngle) + (y - yc) * Math.cos(rotateAngle));
+    return new Point(xn, yn);
 }
 
-function prepareToSaveDot(x, y) {
+function prepareToSaveDot(drawnX, drawnY) {
+    var xc = canvas.width / 2;
+    var yc = canvas.height / 2;
+    let x = drawnX;
+    let y = drawnY;
+
+    let xn = xc + (x - xc) * Math.cos(-rotateAngle) - (y - yc) * Math.sin(-rotateAngle);
+    let yn = yc + (x - xc) * Math.sin(-rotateAngle) + (y - yc) * Math.cos(-rotateAngle);
+    x = xn;
+    y = yn;
+
     if (mirroredX) {
         x = canvas.width - x;
     }
     if (mirroredY) {
         y = canvas.height - y;
     }
-    xc = canvas.width / 2;
-    yc = canvas.height / 2;
-    xn = Math.round(xc + (x - xc) * Math.cos(-rotateAngle) - (y - yc) * Math.sin(-rotateAngle))
-    yn = Math.round(yc + (x - xc) * Math.sin(-rotateAngle) + (y - yc) * Math.cos(-rotateAngle))
-    return new Point(xn / scalingCanvas, yn / scalingCanvas);
+
+    let originalX = x / scalingCanvas;
+    let originalY = y / scalingCanvas;
+    return new Point(Math.round(originalX), Math.round(originalY));
 }
 
 class CustomLine extends DrewObject {

@@ -290,6 +290,7 @@ brushes.forEach((obj, ind) => {
     const button = document.createElement('button');
     button.textContent = `${obj.name}`;
     button.onclick = () => btnClick(ind);
+    button.classList.add('row');
     brushList.appendChild(button);
 });
 

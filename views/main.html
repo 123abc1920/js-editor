@@ -19,13 +19,13 @@
     <header>
         <div class="container">
             <div class="row">
-                <div class="col-sm">
+                <div class="col-sm menu">
                     <p>Js Editor</p>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm menu">
                     <a onclick="location.href='/'">Главная</a>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm menu">
                     <a onclick="location.href='/login'">Профиль</a>
                 </div>
             </div>
@@ -34,17 +34,17 @@
     <main>
         <div class="container">
             <div class="row panel">
-                <div class="col-sm">
-                    <a href="#" onclick="openFile(event);">Open</a>
+                <div class="col-sm menu">
+                    <button onclick="openFile(event);">Open</button>
                 </div>
-                <div class="col-sm">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                <div class="col-sm menu">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
                         onclick="showModal(event);">
                         Новый
                     </button>
                 </div>
-                <div class="col-sm dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                <div class="col-sm dropdown menu">
+                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Сохранить
                     </button>
@@ -55,24 +55,26 @@
                         <a class="dropdown-item" href="#" onclick="saveFile(event, 'server')">Здесь</a>
                     </div>
                 </div>
-                <div class="col-sm">
-                    <a href="#" onclick="unDo(event);">Undo</a>
+                <div class="col-sm menu">
+                    <button onclick="unDo(event);">Undo</button>
                 </div>
-                <div class="col-sm">
-                    <a href="#" onclick="reDo(event);">Redo</a>
+                <div class="col-sm menu">
+                    <button onclick="reDo(event);">Redo</button>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm tools">
-                    <a href="#" onclick="startDraw(event);">Рис</a>
-                    <a href="#" onclick="drawSquare(event);">прям</a>
-                    <a href="#" onclick="drawEllips(event);">круг</a>
-                    <a href="#" onclick="drawLine(event);">линия</a>
-                    <a href="#" onclick="startCheckColor(event);">пип</a>
-                    <a href="#" onclick="startCover(event);">зал</a>
+                    <button class="row" onclick="startDraw(event);">Рис</button>
+                    <button class="row" onclick="drawSquare(event);">прям</button>
+                    <button class="row" onclick="drawEllips(event);">круг</button>
+                    <button class="row" onclick="drawLine(event);">линия</button>
+                    <button class="row" onclick="startCheckColor(event);">пип</button>
+                    <button class="row" onclick="startCover(event);">зал</button>
                 </div>
-                <div class="col-sm img" id="imgPanel">
-                    <canvas id="canvas"></canvas>
+                <div class="col-sm img-place">
+                    <div class="img" id="imgPanel">
+                        <canvas id="canvas"></canvas>
+                    </div>
                 </div>
                 <div class="col-sm advanced-tools">
                     <div id="color-picker" class="input-group colorpicker-component">
@@ -179,7 +181,7 @@
         </div>
     </main>
     <footer>
-        <p>hhhh</p>
+        <p>2025</p>
     </footer>
 
     <div class="modal fade" id="newFileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

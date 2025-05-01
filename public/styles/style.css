@@ -1,36 +1,88 @@
+:root {
+    --primary-color: #2b68a1;
+    --secondary-color: #2d3440;
+    --key-color: #494e63;
+}
+
+body {
+    background-color: var(--key-color);
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
 footer {
-    background-color: #FFC8A8;
+    background-color: var(--primary-color);
+    text-align: center;
+    height: 100%;
 }
 
 header {
-    background-color: #FFC8A8;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1vh;
+}
+
+header p{
+    margin: 0;
+}
+
+main p {
+    background-color: var(--primary-color);
+    margin: 0;
+    color: white;
+}
+
+main button {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    width: 100%;
+    margin: 0;
     color: white;
 }
 
 .tools {
-    background-color: aqua;
+    background-color: var(--secondary-color);
     max-width: 100px;
     min-width: 100px;
 }
 
 .img {
-    background-color: palevioletred;
-    height: 85vh;
+    height: 79vh;
+    margin: 0;
+    padding: 0;
+    align-content: center;
+    background-color: var(--key-color);
+}
+
+.img-place {
+    align-content: center;
+    text-align: center;
     overflow-y: scroll;
     overflow-x: scroll;
+}
+
+.panel {
+    background-color: var(--secondary-color);
+}
+
+.panel button {
+    padding: 1vh 1vw;
+    margin: 0;
+    border-radius: 0;
+    color: white;
+}
+
+.panel div{
     margin: 0;
     padding: 0;
 }
 
-.panel {
-    background-color: cadetblue;
-}
-
 .advanced-tools {
-    background-color: brown;
+    background-color: var(--secondary-color);
     max-width: 300px;
     min-width: 300px;
-    height: 85vh;
+    height: 79vh;
     overflow-y: scroll;
 }
 
@@ -49,7 +101,7 @@ header {
 }
 
 .canvas-tools {
-    background-color: darkgoldenrod;
+    background-color: var(--secondary-color);
 }
 
 .params {
@@ -60,12 +112,22 @@ header {
     width: 70%;
 }
 
-.photo{
+.photo {
     outline: auto;
     text-align: center;
     align-content: center;
 }
 
-.photo img{
+.photo img {
     outline: auto;
+}
+
+.menu {
+    flex-grow: unset;
+    flex-shrink: unset;
+    flex-basis: content;
+}
+
+button:hover {
+    background-color: var(--primary-color);
 }

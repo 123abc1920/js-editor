@@ -23,7 +23,12 @@ class SimpleBrush {
         ctx.lineWidth = obj.width;
         var rectangle = new Path2D();
         var newP = prepareToDrawDot(obj.center.x, obj.center.y);
-        rectangle.rect(newP.x - obj.getSize().x / 2, newP.y - obj.getSize().y / 2, obj.getSize().x, obj.getSize().y);
+        var finP = prepareToDrawDot(obj.finish.x, obj.finish.y);
+        var startP = prepareToDrawDot(obj.start.x, obj.start.y);
+        var w = Math.abs(finP.x - startP.x);
+        var h = Math.abs(finP.y - startP.y);
+
+        rectangle.rect(newP.x - w / 2, newP.y - h / 2, w, h);
         ctx.stroke(rectangle);
     }
 
@@ -32,7 +37,8 @@ class SimpleBrush {
         ctx.lineWidth = obj.width;
         ctx.beginPath();
         var newP = prepareToDrawDot(obj.start.x, obj.start.y);
-        ctx.ellipse(newP.x, newP.y, obj.size.x * scalingCanvas, obj.size.y * scalingCanvas, 0, 0, 180);
+        var finP = prepareToDrawDot(obj.finish.x, obj.finish.y);
+        ctx.ellipse(newP.x, newP.y, Math.abs(finP.x - newP.x), Math.abs(finP.y - newP.y), 0, 0, 180);
         ctx.stroke();
     }
 
@@ -68,39 +74,46 @@ class SmoothBrush extends SimpleBrush {
         }
     }
 
-    drawSquare(obj, ctx) {
+    /*drawSquare(obj, ctx) {
         ctx.fillStyle = obj.color;
         ctx.lineWidth = obj.width;
 
         var newP = prepareToDrawDot(obj.center.x, obj.center.y);
-        if (!obj.special) {
+        var finP = prepareToDrawDot(obj.finish.x, obj.finish.y);
+        var startP = prepareToDrawDot(obj.start.x, obj.start.y);
+        var w = Math.abs(finP.x - startP.x);
+        var h = Math.abs(finP.y - startP.y);
+
+        if (!obj.special || obj.special[0][0] != prepareToSaveDot(newP.x - w / 2, 0).x) {
             obj.special = [[], []]
-            for (let i = newP.x - obj.getSize().x / 2, k = 0; i < newP.x + obj.getSize().x / 2; i += Math.random() * (obj.size.x / 20), k++) {
+            for (let i = newP.x - w / 2, k = 0; i < newP.x + w / 2; i += Math.random() * (w / 20), k++) {
                 obj.special[0].push(prepareToSaveDot(i, 0).x);
             }
-            for (let i = newP.y - obj.getSize().y / 2, k = 0; i < newP.y + obj.getSize().y / 2; i += Math.random() * (obj.size.y / 20), k++) {
+            for (let i = newP.y - h / 2, k = 0; i < newP.y + h / 2; i += Math.random() * (h / 20), k++) {
                 obj.special[1].push(prepareToSaveDot(i, 0).x);
             }
         }
 
-        let start = Math.min(newP.x - obj.getSize().x / 2, newP.x + obj.getSize().x / 2);
-        let fin = Math.max(newP.x - obj.getSize().x / 2, newP.x + obj.getSize().x / 2);
+        console.log(obj.special);
+
+        let start = Math.min(newP.x - w / 2, newP.x + w / 2);
+        let fin = Math.max(newP.x - w / 2, newP.x + w / 2);
         for (let i = start, k = 0; i < fin; i = obj.special[0][k], k++) {
             ctx.beginPath();
-            ctx.ellipse(prepareToDrawDot(i, 0).x, newP.y - obj.getSize().y / 2, obj.width, obj.width, 0, 0, 180);
-            ctx.ellipse(prepareToDrawDot(i, 0).x, newP.y + obj.getSize().y / 2, obj.width, obj.width, 0, 0, 180);
+            ctx.ellipse(prepareToDrawDot(i, 0).x, newP.y - h / 2, obj.width, obj.width, 0, 0, 180);
+            ctx.ellipse(prepareToDrawDot(i, 0).x, newP.y + h / 2, obj.width, obj.width, 0, 0, 180);
             ctx.fill();
         }
 
-        start = Math.min(newP.y - obj.getSize().y / 2, newP.y + obj.getSize().y / 2);
-        fin = Math.max(newP.y - obj.getSize().y / 2, newP.y + obj.getSize().y / 2);
+        start = Math.min(newP.y - h / 2, newP.y + h / 2);
+        fin = Math.max(newP.y - h / 2, newP.y + h / 2);
         for (let i = start, k = 0; i < fin; i = obj.special[1][k], k++) {
             ctx.beginPath();
-            ctx.ellipse(newP.x - obj.getSize().x / 2, prepareToDrawDot(i, 0).x, obj.width, obj.width, 0, 0, 180);
-            ctx.ellipse(newP.x + obj.getSize().x / 2, prepareToDrawDot(i, 0).x, obj.width, obj.width, 0, 0, 180);
+            ctx.ellipse(newP.x - w / 2, prepareToDrawDot(i, 0).x, obj.width, obj.width, 0, 0, 180);
+            ctx.ellipse(newP.x + w / 2, prepareToDrawDot(i, 0).x, obj.width, obj.width, 0, 0, 180);
             ctx.fill();
         }
-    }
+    }*/
 
     drawDirectLine(obj, ctx) {
         ctx.fillStyle = obj.color;

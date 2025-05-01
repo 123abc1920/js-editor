@@ -3,12 +3,15 @@ class EffectObject extends DrewObject {
         super(0, 0, false);
         this.imageData = null;
         this.coeff = scalingCanvas;
+        this.rotateAngle = rotateAngle;
+        this.mirroredX = mirroredX;
+        this.mirroredY = mirroredY;
     }
 
     update() { }
 
     drawObject(ctx) {
-        if (this.coeff != scalingCanvas) {
+        if (this.coeff != scalingCanvas || this.mirroredX != mirroredX || this.mirroredY != mirroredY || this.rotateAngle != rotateAngle) {
             this.coeff = scalingCanvas;
             this.update();
         }

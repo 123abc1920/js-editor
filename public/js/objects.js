@@ -70,17 +70,14 @@ class CustomSquare extends DrewObject {
         super(color, width, isFill, brush);
         this.start = prepareToSaveDot(x, y);
         this.center = new Point(0, 0);
-        this.size = null;
+        this.finish = new Point(0, 0);
     }
 
     setSize(w, h) {
-        this.size = new Point(w / scalingCanvas, h / scalingCanvas);
-        this.center.x = this.start.x + this.size.x / 2;
-        this.center.y = this.start.y + this.size.y / 2;
-    }
-
-    getSize() {
-        return new Point(this.size.x * scalingCanvas, this.size.y * scalingCanvas);
+        this.finish.x = this.start.x + w / scalingCanvas;
+        this.finish.y = this.start.y + h / scalingCanvas;
+        this.center.x = this.start.x + w / scalingCanvas / 2;
+        this.center.y = this.start.y + h / scalingCanvas / 2;
     }
 
     drawObject(ctx) {
@@ -96,11 +93,12 @@ class CustomCircle extends DrewObject {
     constructor(x, y, color, width, isFill, brush) {
         super(color, width, isFill, brush);
         this.start = prepareToSaveDot(x, y);
-        this.size = null;
+        this.finish = new Point(0, 0);
     }
 
     setSize(w, h) {
-        this.size = new Point(w / scalingCanvas, h / scalingCanvas);
+        this.finish.x = this.start.x + w / scalingCanvas;
+        this.finish.y = this.start.y + h / scalingCanvas;
     }
 
     drawObject(ctx) {

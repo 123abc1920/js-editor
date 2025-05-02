@@ -4,6 +4,11 @@
     --key-color: #494e63;
 }
 
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--secondary-color);
+}
+
 body {
     background-color: var(--key-color);
     overflow-y: hidden;
@@ -13,7 +18,12 @@ body {
 footer {
     background-color: var(--primary-color);
     text-align: center;
-    height: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4vh;
+    color: white;
 }
 
 header {
@@ -22,7 +32,7 @@ header {
     padding: 1vh;
 }
 
-header p{
+header p {
     margin: 0;
 }
 
@@ -39,16 +49,28 @@ main button {
     width: 100%;
     margin: 0;
     color: white;
+    text-align: left;
+}
+
+.mainest-container {
+    background-color: var(--secondary-color);
+    height: 100%;
 }
 
 .tools {
     background-color: var(--secondary-color);
     max-width: 100px;
     min-width: 100px;
+    overflow-y: scroll;
+    padding: 0;
+}
+
+.tools button {
+    margin: 0;
 }
 
 .img {
-    height: 79vh;
+    height: 100%;
     margin: 0;
     padding: 0;
     align-content: center;
@@ -60,6 +82,8 @@ main button {
     text-align: center;
     overflow-y: scroll;
     overflow-x: scroll;
+    margin: 0;
+    padding: 0;
 }
 
 .panel {
@@ -73,7 +97,7 @@ main button {
     color: white;
 }
 
-.panel div{
+.panel div {
     margin: 0;
     padding: 0;
 }
@@ -82,8 +106,22 @@ main button {
     background-color: var(--secondary-color);
     max-width: 300px;
     min-width: 300px;
-    height: 79vh;
+    height: 100%;
     overflow-y: scroll;
+}
+
+.advanced-tools label {
+    background-color: var(--primary-color);
+    color: white;
+    width: 100%;
+}
+
+.form-check {
+    margin-top: 1vh;
+}
+
+.main-row {
+    height: 75vh;
 }
 
 .brushes {
@@ -92,24 +130,34 @@ main button {
     overflow-x: hidden;
 }
 
-.width-div {
-    max-width: 30%;
+.fill-div {
+    align-content: center;
+    padding: 0;
 }
 
-.fill-div {
+.fill-box {
     max-width: 10%;
+}
+
+.fill-div p {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
 }
 
 .canvas-tools {
     background-color: var(--secondary-color);
+    padding-top: 3vh;
+    height: 10vh;
+    padding-bottom: 1vh;
+    align-items: center;
 }
 
-.params {
-    width: 30%;
-}
-
-.params-btn {
-    width: 70%;
+.canvas-tools p {
+    width: fit-content;
+    height: fit-content;
+    background-color: transparent;
+    text-align: end;
 }
 
 .photo {
@@ -130,4 +178,63 @@ main button {
 
 button:hover {
     background-color: var(--primary-color);
+}
+
+.drops {
+    border-radius: 0px;
+    background-color: var(--secondary-color);
+}
+
+.drops a {
+    color: white;
+}
+
+.drops a:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.advanced-tools p {
+    margin-top: 1vh;
+}
+
+.form-control {
+    width: 5vw;
+    height: 4vh;
+    flex-grow: unset;
+    flex-shrink: unset;
+    border-radius: 0;
+}
+
+.form-control:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+.form-range {
+    width: 10vw;
+    flex-grow: unset;
+    flex-shrink: unset;
+    border-radius: 0;
+}
+
+.color-picker-div {
+    width: unset;
+    text-align: center;
+    align-items: center;
+}
+
+#color-picker-text {
+    width: 100%;
+}
+
+#colorpicker-color div {
+    width: 5vw;
+}
+
+.form-check-input:focus {
+    box-shadow: none;
+    outline: none;
+    border: none;
 }

@@ -32,10 +32,10 @@
         </div>
     </header>
     <main>
-        <div class="container">
+        <div class="container mainest-container">
             <div class="row panel">
                 <div class="col-sm menu">
-                    <button onclick="openFile(event);">Open</button>
+                    <button onclick="openFile(event);">Открыть</button>
                 </div>
                 <div class="col-sm menu">
                     <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -44,11 +44,11 @@
                     </button>
                 </div>
                 <div class="col-sm dropdown menu">
-                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
                         Сохранить
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu drops" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#" onclick="saveFile(event, 'png');">PNG</a>
                         <a class="dropdown-item" href="#" onclick="saveFile(event, 'jpeg');">JPEG</a>
                         <a class="dropdown-item" href="#" onclick="savePDF();">PDF</a>
@@ -62,7 +62,7 @@
                     <button onclick="reDo(event);">Redo</button>
                 </div>
             </div>
-            <div class="row">
+            <div class="row main-row">
                 <div class="col-sm tools">
                     <button class="row" onclick="startDraw(event);">Рис</button>
                     <button class="row" onclick="drawSquare(event);">прям</button>
@@ -77,13 +77,15 @@
                     </div>
                 </div>
                 <div class="col-sm advanced-tools">
-                    <div id="color-picker" class="input-group colorpicker-component">
-                        <div class="row">
-                            <input id="color-picker-text" onchange="setNewColor(event, this.value);" type="text"
-                                value="#DD0F20FF" class="form-control" />
-                        </div>
-                        <div class="row">
-                            <span class="input-group-addon"></span>
+                    <div id="color-picker" class="input-group colorpicker-component row color-picker-div">
+                        <div class="col-sm">
+                            <div class="row">
+                                <input id="color-picker-text" onchange="setNewColor(event, this.value);" type="text"
+                                    value="#DD0F20FF" class="form-control" />
+                            </div>
+                            <div class="row">
+                                <span class="input-group-addon"></span>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -100,83 +102,80 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm fill-div">
+                        <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" onchange="setFill(event);"
                                 id="flexCheckChecked">
-                        </div>
-                        <div class="col-sm">
-                            <p>Заливка фигуры</p>
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Заливка
+                            </label>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="row">
-                            <p>Кисть</p>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm brushes" id="brushList">
-                            </div>
+                        <p>Кисть</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm brushes" id="brushList">
                         </div>
                     </div>
                     <div class="row">
                         <p>Трансформации</p>
                     </div>
                     <div class="row">
-                        <a href="#" onclick="mirrorY(event);">ОтразитьY</a>
+                        <button onclick="mirrorY(event);">ОтразитьY</button>
                     </div>
                     <div class="row">
-                        <a href="#" onclick="mirrorX(event);">ОтразитьX</a>
+                        <button onclick="mirrorX(event);">ОтразитьX</button>
                     </div>
                     <div class="row">
-                        <a href="#" onclick="rotateLeft(event);">Повернуть влево</a>
+                        <button onclick="rotateLeft(event);">Повернуть влево</button>
                     </div>
                     <div class="row">
-                        <a href="#" onclick="rotateRight(event);">Повернуть вправо</a>
+                        <button onclick="rotateRight(event);">Повернуть вправо</button>
                     </div>
                     <div class="row">
                         <p>Эффекты</p>
                     </div>
-                    <div class="col-sm brushes">
-                        <div class="row">
-                            <a href="#" onclick="gray(event);">Серый</a>
-                        </div>
-                        <div class="row">
-                            <a href="#" onclick="noise(event);">Шум</a>
-                        </div>
-                        <div class="row">
-                            <a href="#" class="params-btn" onclick="glitch(event);">Глитч</a>
-                            <input type="number" class="params" id="glitch-param" value="10" min="5" max="20"
-                                step="1" />
-                        </div>
-                        <div class="row">
-                            <a href="#" class="params-btn" onclick="bright(event);">Яркость</a>
-                            <input type="number" class="params" id="bright-param" value="1" min="0" max="2"
-                                step="0.1" />
-                        </div>
-                        <div class="row">
-                            <a href="#" class="params-btn" onclick="contrast(event);">Контраст</a>
-                            <input type="number" class="params" id="contrast-param" value="0" min="-20" max="20"
-                                step="1" />
-                        </div>
-                        <div class="row">
-                            <a href="#" class="params-btn" onclick="saturation(event);">Насыщенность</a>
-                            <input type="number" class="params" id="saturation-param" value="0" min="-20" max="20"
-                                step="1" />
-                        </div>
-                        <div class="row">
-                            <a href="#" onclick="sepia(event);">Сепия</a>
+                    <div class="row brushes">
+                        <div class="col-sm">
+                            <div class="row">
+                                <button onclick="gray(event);">Серый</a>
+                            </div>
+                            <div class="row">
+                                <button onclick="noise(event);">Шум</a>
+                            </div>
+                            <div class="row">
+                                <button class="col-sm" onclick="glitch(event);">Глитч</button>
+                                <input type="number" class="col-sm form-control" id="glitch-param" value="10" min="5"
+                                    max="20" step="1" />
+                            </div>
+                            <div class="row">
+                                <button class="col-sm" onclick="bright(event);">Яркость</button>
+                                <input type="number" class="col-sm form-control" id="bright-param" value="1" min="0"
+                                    max="2" step="0.1" />
+                            </div>
+                            <div class="row">
+                                <button class="col-sm" onclick="contrast(event);">Контраст</button>
+                                <input type="number" class="col-sm form-control" id="contrast-param" value="0" min="-20"
+                                    max="20" step="1" />
+                            </div>
+                            <div class="row">
+                                <button class="col-sm" onclick="saturation(event);">Насыщенность</button>
+                                <input type="number" class="col-sm form-control" id="saturation-param" value="0"
+                                    min="-20" max="20" step="1" />
+                            </div>
+                            <div class="row">
+                                <button onclick="sepia(event);">Сепия</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class=" row canvas-tools">
-                <div class="col-sm">
-                    <input type="range" class="form-range" id="size-picker" value="100" min="20" max="200" step="10"
-                        onchange="resizeCanvas(event, this.value);">
-                </div>
-                <div class="col-sm width-div">
-                    <input type="number" id="size-text" class="form-control" value="100" min="20" max="200" step="10"
-                        onchange="resizeCanvas(event, this.value);" />
-                </div>
+            <div class="row canvas-tools">
+                <p class="col-sm">Размер холста:</p>
+                <input type="range" class="col-sm form-range" id="size-picker" value="100" min="20" max="200" step="10"
+                    onchange="resizeCanvas(event, this.value);">
+                <input type="number" id="size-text" class="col-sm form-control" value="100" min="20" max="200" step="10"
+                    onchange="resizeCanvas(event, this.value);" />
             </div>
         </div>
     </main>

@@ -1,0 +1,49 @@
+:root {
+    --primary-color: #2b68a1;
+    --secondary-color: #2d3440;
+    --key-color: #494e63;
+}
+
+.login-container {
+    margin-top: 20vh;
+    margin-left: 30vw;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    height: 50%;
+    width: 30%;
+    background-color: var(--secondary-color);
+    padding-left: 3vw;
+    padding-right: 3vw;
+    border-radius: 10px;
+}
+
+.login-container p{
+    background-color: transparent;
+    text-align: start;
+    color: white;
+}
+
+.login-container button{
+    margin-top: 1vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    border-radius: 10px;
+}
+
+.form-control{
+    width: 10vw;
+    border-radius: 10px;
+}
+
+.login-container .row {
+    padding: 0;
+    margin: 0;
+}
+
+#reg-btn:hover{
+    background-color: transparent;
+    outline-style: solid;
+    outline-width: 2px;
+    outline-color: var(--primary-color);
+}

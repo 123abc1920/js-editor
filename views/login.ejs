@@ -13,50 +13,53 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.5.0/sql-wasm.js"></script>
 
     <link rel="stylesheet" href="../public/styles/style.css">
+    <link rel="stylesheet" href="../public/styles/loginstyle.css">
 </head>
 
 <body>
     <header>
         <div class="container">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm">
-                        <p>Js Editor</p>
-                    </div>
-                    <div class="col-sm">
-                        <a onclick="location.href='/'">Главная</a>
-                    </div>
-                    <div class="col-sm">
-                        <a onclick="location.href='/profile'">Профиль</a>
-                    </div>
+            <div class="row">
+                <div class="col-sm menu">
+                    <p>Js Editor</p>
+                </div>
+                <div class="col-sm menu">
+                    <a onclick="location.href='/'">Главная</a>
+                </div>
+                <div class="col-sm menu">
+                    <a onclick="location.href='/login'">Профиль</a>
                 </div>
             </div>
         </div>
     </header>
     <main>
         <div class="container">
-            <div class="row">
-                <p>
-                    <%=message %>
-                </p>
+            <div class="login-container align-items-center justify-content-center">
+                <div class="row">
+                    <p>
+                        <%=message %>
+                    </p>
+                </div>
+                <form method="POST">
+                    <div class="row">
+                        <p class="form-label col">Логин</p>
+                        <input type="text" class="form-control col" id="username" name="username"
+                            aria-describedby="name">
+                    </div>
+                    <div class="row">
+                        <p class="form-label col">Пароль</p>
+                        <input type="password" class="form-control col" name="userpass" id="userpass">
+                    </div>
+                    <div class="row">
+                        <button type="submit" formaction="/profile" class="col">Войти</button>
+                        <button type="submit" id="reg-btn" formaction="/reqistr"
+                            class="col">Регистрироваться</button>
+                    </div>
+                </form>
             </div>
-            <form method="POST">
-                <div class="row">
-                    <label for="exampleInputEmail1" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="username" name="username" aria-describedby="name">
-                </div>
-                <div class="row">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" name="userpass" id="userpass">
-                </div>
-                <div class="row">
-                    <button type="submit" formaction="/profile" class="btn btn-primary col">Войти</button>
-                    <button type="submit" formaction="/reqistr" class="btn btn-primary col">Регистрироваться</button>
-                </div>
-            </form>
         </div>
     </main>
     <footer>
-        <p>hhhh</p>
+        <p>2025</p>
     </footer>
 </body>

@@ -72,18 +72,18 @@
             </div>
             <div class="row main-row">
                 <div class="col-sm tools">
-                    <button class="row" onclick="startDraw(event);"><i class="bi bi-pencil"></i></button>
-                    <button class="row" onclick="drawSquare(event);"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                    <button class="row" id="pen" onclick="startDraw(event);"><i class="bi bi-pencil"></i></button>
+                    <button class="row" id="square" onclick="drawSquare(event);"><svg xmlns="http://www.w3.org/2000/svg" width="16"
                             height="16" fill="currentColor" class="bi bi-0-square" viewBox="0 0 16 16">
                             <path
                                 d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z" />
                         </svg></button>
-                    <button class="row" onclick="drawEllips(event);"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                    <button class="row" id="circle" onclick="drawEllips(event);"><svg xmlns="http://www.w3.org/2000/svg" width="16"
                             height="16" fill="currentColor" class="bi bi-0-circle" viewBox="0 0 16 16">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8" />
                         </svg></button>
-                    <button class="row" onclick="drawLine(event);"><i class="bi bi-slash-lg"></i></button>
-                    <button class="row" onclick="startCheckColor(event);"><svg xmlns="http://www.w3.org/2000/svg"
+                    <button class="row" id="line" onclick="drawLine(event);"><i class="bi bi-slash-lg"></i></button>
+                    <button class="row" id="pipette" onclick="startCheckColor(event);"><svg xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 325 325" width="16" height="16"
                             xml:space="preserve">
                             <g>
@@ -100,7 +100,7 @@
                                     fill="#000000" style="fill: rgb(255, 255, 255);" />
                             </g>
                         </svg></button>
-                    <button class="row" onclick="startCover(event);"><i class="bi bi-paint-bucket"></i></button>
+                    <button class="row" id="fill" onclick="startCover(event);"><i class="bi bi-paint-bucket"></i></button>
                 </div>
                 <div class="col-sm img-place">
                     <div class="img" id="imgPanel">
@@ -246,6 +246,7 @@
             pdf.save('image.pdf');
         }
     </script>
+    <script src="../public/js/params.js"></script>
     <script src="../public/js/objects.js"></script>
     <script src="../public/js/effectsObjects.js"></script>
     <script src="../public/js/brushes.js"></script>

@@ -362,3 +362,7 @@ button:hover {
 .modal-footer button:hover {
     transform: scale(1.25);
 }
+
+.selected-btns{
+    background-color: var(--primary-color);
+}

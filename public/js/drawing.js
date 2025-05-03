@@ -108,6 +108,7 @@ function startDraw(event) {
     square = false;
     checkColor = false;
     cover = false;
+    resetColors();
 }
 
 function drawSquare(event) {
@@ -117,6 +118,7 @@ function drawSquare(event) {
     line = false;
     checkColor = false;
     cover = false;
+    resetColors();
 }
 
 function drawEllips(event) {
@@ -126,6 +128,7 @@ function drawEllips(event) {
     square = false;
     checkColor = false;
     cover = false;
+    resetColors();
 }
 
 function drawLine(event) {
@@ -135,6 +138,7 @@ function drawLine(event) {
     touching = false;
     checkColor = false;
     cover = false;
+    resetColors();
 }
 
 function startCheckColor(event) {
@@ -144,6 +148,7 @@ function startCheckColor(event) {
     square = false;
     touching = false;
     cover = false;
+    resetColors();
 }
 
 function startCover(event) {
@@ -153,6 +158,7 @@ function startCover(event) {
     ellips = false;
     square = false;
     touching = false;
+    resetColors();
 }
 
 function repaint() {

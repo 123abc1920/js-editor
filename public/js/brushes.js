@@ -291,9 +291,13 @@ brushes.forEach((obj, ind) => {
     button.textContent = `${obj.name}`;
     button.onclick = () => btnClick(ind);
     button.classList.add('row');
+    button.classList.add('brush');
     brushList.appendChild(button);
 });
 
+resetBrushes(0);
+
 function btnClick(index) {
     currentBrush = brushes[index];
+    resetBrushes(index);
 }

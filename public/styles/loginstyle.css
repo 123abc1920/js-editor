@@ -2,6 +2,7 @@
     --primary-color: #2b68a1;
     --secondary-color: #2d3440;
     --key-color: #494e63;
+    --shadow-color: #2885db49;
 }
 
 .login-container {
@@ -18,20 +19,24 @@
     border-radius: 10px;
 }
 
-.login-container p{
+.login-container:hover{
+    box-shadow: 0px 0px 65px 18px var(--shadow-color);
+}
+
+.login-container p {
     background-color: transparent;
     text-align: start;
     color: white;
 }
 
-.login-container button{
+.login-container button {
     margin-top: 1vh;
     padding-top: 1vh;
     padding-bottom: 1vh;
     border-radius: 10px;
 }
 
-.form-control{
+.form-control {
     width: 10vw;
     border-radius: 10px;
 }
@@ -41,7 +46,7 @@
     margin: 0;
 }
 
-#reg-btn:hover{
+#reg-btn:hover {
     background-color: transparent;
     outline-style: solid;
     outline-width: 2px;

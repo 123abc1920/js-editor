@@ -12,6 +12,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.5.0/sql-wasm.js"></script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="../public/styles/style.css">
     <link rel="stylesheet" href="../public/styles/loginstyle.css">
 </head>
@@ -21,14 +25,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm menu">
-                    <p>Js Editor</p>
+                    <p class="beauty-p">Js Editor</p>
                 </div>
                 <div class="col-sm menu">
-                    <a onclick="location.href='/'">Главная</a>
+                    <button onclick="location.href='/'">Главная</button>
                 </div>
                 <div class="col-sm menu">
-                    <a onclick="location.href='/login'">Профиль</a>
+                    <button onclick="location.href='/login'">Профиль</button>
                 </div>
+                <span class="flare"></span>
             </div>
         </div>
     </header>
@@ -52,8 +57,7 @@
                     </div>
                     <div class="row">
                         <button type="submit" formaction="/profile" class="col">Войти</button>
-                        <button type="submit" id="reg-btn" formaction="/reqistr"
-                            class="col">Регистрироваться</button>
+                        <button type="submit" id="reg-btn" formaction="/reqistr" class="col">Регистрироваться</button>
                     </div>
                 </form>
             </div>

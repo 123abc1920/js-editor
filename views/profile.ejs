@@ -12,38 +12,42 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.5.0/sql-wasm.js"></script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="../public/styles/style.css">
+    <link rel="stylesheet" href="../public/styles/profilestyle.css">
 </head>
 
 <body>
     <header>
         <div class="container">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm">
-                        <p>Js Editor</p>
-                    </div>
-                    <div class="col-sm">
-                        <a onclick="location.href='/'">Главная</a>
-                    </div>
-                    <div class="col-sm">
-                        <a onclick="location.href='/login'">Профиль</a>
-                    </div>
+            <div class="row">
+                <div class="col-sm menu">
+                    <p class="beauty-p">Js Editor</p>
                 </div>
+                <div class="col-sm menu">
+                    <button onclick="location.href='/'">Главная</button>
+                </div>
+                <div class="col-sm menu">
+                    <button onclick="location.href='/login'">Профиль</button>
+                </div>
+                <span class="flare"></span>
             </div>
         </div>
     </header>
     <main>
-        <div class="container">
-            <div class="row">
-                <p>
+        <div class="container profile-container">
+            <div class="row main-profile-menu">
+                <p class="col-sm beauty-p menu profile-title">
                     Фотографии от <%=name %>
                 </p>
-                <form action="/delete" method="post">
-                    <button name="delete">Удалить профиль</button>
+                <form class="col-sm menu profile-menu" action="/delete" method="post">
+                    <button name="delete" class="profile-btn">Удалить профиль</button>
                 </form>
-                <form action="/login" method="get">
-                    <button name="logout"
+                <form class="col-sm menu profile-menu" action="/login" method="get">
+                    <button name="logout" class="profile-btn"
                         onclick="document.cookie = 'username=; Max-Age=-1;'; return true;">Выйти</button>
                 </form>
             </div>
@@ -53,11 +57,15 @@
                         <% tri.forEach(photo=> { %>
                             <div class="col-sm photo">
                                 <form method="post">
-                                    <input formaction="/deletephoto" type="submit" value="Удалить фото" />
-                                    <input formaction="/openphoto" type="submit" name="action" value="Открыть фото">
+                                    <input formaction="/openphoto" type="submit" id="<%= photo %>" value="О"
+                                        style="display: none;">
+                                    <input formaction="/deletephoto" type="submit" value="x" class="delete-btn" />
                                     <textarea name="namephoto" style="display: none;"><%= photo %></textarea>
-                                    <img class="w-100 shadow-1-strong rounded mb-4" src="<%= photo %>" alt="Фотография">
                                 </form>
+                                <div class="photo-frame">
+                                    <img class="w-100" src="<%= photo %>" alt="Фотография"
+                                        onclick="document.getElementById('<%= photo %>').click();">
+                                </div>
                             </div>
                             <% }); %>
                     </div>
@@ -65,6 +73,6 @@
             </div>
     </main>
     <footer>
-        <p>hhhh</p>
+        <p>2025</p>
     </footer>
 </body>

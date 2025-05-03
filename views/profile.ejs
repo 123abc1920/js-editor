@@ -54,25 +54,23 @@
                 </form>
             </div>
             <div>
-                <% tripl.forEach(tri=> { %>
-                    <div class="row">
-                        <% tri.forEach(photo=> { %>
-                            <div class="col-sm photo">
-                                <form method="post">
-                                    <input formaction="/openphoto" type="submit" id="<%= photo %>" value="О"
-                                        style="display: none;">
-                                    <button type="submit" formaction="/deletephoto" class="delete-btn"><i
-                                            class="bi bi-x"></i></button>
-                                    <textarea name="namephoto" style="display: none;"><%= photo %></textarea>
-                                </form>
-                                <div class="photo-frame">
-                                    <img class="w-100" src="<%= photo %>" alt="Фотография"
-                                        onclick="document.getElementById('<%= photo %>').click();">
-                                </div>
+                <div class="photo-container">
+                    <% photo.forEach(photo=> { %>
+                        <div class="photo">
+                            <form method="post">
+                                <input formaction="/openphoto" type="submit" id="<%= photo %>" value="О"
+                                    style="display: none;">
+                                <button type="submit" formaction="/deletephoto" class="delete-btn"><i
+                                        class="bi bi-x"></i></button>
+                                <textarea name="namephoto" style="display: none;"><%= photo %></textarea>
+                            </form>
+                            <div class="photo-frame">
+                                <img class="w-100" src="<%= photo %>" alt="Фотография"
+                                    onclick="document.getElementById('<%= photo %>').click();">
                             </div>
-                            <% }); %>
-                    </div>
-                    <% }); %>
+                        </div>
+                        <% }); %>
+                </div>
             </div>
     </main>
     <footer>

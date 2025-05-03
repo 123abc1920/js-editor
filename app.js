@@ -34,14 +34,7 @@ app.post('/profile', (req, res) => {
         rows.forEach(item => {
             photos.push("uploads/" + item.photo);
         });
-        let tripl = []
-        for (let i = 0; i < photos.length; i++) {
-            if (i % 5 == 0) {
-                tripl.push([]);
-            }
-            tripl[tripl.length - 1].push(photos[i]);
-        }
-        res.render('profile', { name: username, tripl: tripl });
+        res.render('profile', { name: username, photo: photos });
     } else {
         res.redirect(`/login?trying=${true}`);
     }

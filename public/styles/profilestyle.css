@@ -10,9 +10,18 @@ body {
     overflow-x: hidden;
 }
 
+footer {
+    background-color: var(--primary-color);
+    text-align: center;
+    height: 4vh;
+    color: white;
+    position: unset;
+}
+
 .profile-container {
     background-color: var(--secondary-color);
     padding: 2vh 4vw;
+    min-height: 87vh;
 }
 
 .profile-title {
@@ -47,44 +56,46 @@ body {
 }
 
 .photo {
-    flex-grow: unset;
-    flex-shrink: unset;
-    flex-basis: unset;
-    text-align: center;
+    text-align: start;
     align-content: center;
     width: 20%;
     max-width: 20%;
-    padding: 1vh 1vw;
+    padding: 0 1vw;
 }
 
 .photo-frame {
     background-color: var(--primary-color);
     padding: 10px;
-    border-radius: 10px 0 10px 10px;
+    width: fit-content;
+    border-radius: 0 10px 10px 10px;
 }
 
 .photo-frame img {
-    border-radius: 10px;
     margin: 0;
     transition: transform 1s ease;
+    max-height: 30vh;
+    width: auto;
+    object-fit: contain;
+    border-radius: 10px;
 }
 
 .photo-frame img:hover {
-    box-shadow: 0px 0px 30px 10px var(--shadow-color);
     transform: scale(1.25);
 }
 
 form {
     margin: 0;
     padding: 0;
-    text-align: end;
 }
 
 .delete-btn {
     background-color: var(--primary-color);
     border-radius: 10px 10px 0 0;
+    text-align: center;
     width: 20%;
     border: none;
     outline: none;
     color: white;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
 }

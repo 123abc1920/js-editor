@@ -300,8 +300,65 @@ button:hover {
     border: none;
 }
 
-.tools button{
+.tools button {
     text-align: center;
     padding-top: 1vh;
     padding-bottom: 1vh;
+}
+
+.dialog-input {
+    width: 100%;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    margin-bottom: 2vh;
+    padding: 2vh 1vw;
+    outline-style: solid;
+    outline-color: var(--secondary-color);
+    outline-width: 1px;
+    border-radius: 10px;
+    border: none;
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.dialog-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.dialog-input:focus,
+.dialog-input:active {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 3vh 1vw;
+}
+
+.modal-content {
+    background-color: var(--key-color);
+    color: white;
+}
+
+.modal-header,
+.modal-footer {
+    border-color: var(--secondary-color);
+}
+
+.modal-footer button {
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 1vh 1vw;
+    outline-width: 3px;
+    outline-color: var(--secondary-color);
+    outline-style: solid;
+    transition: transform 1s ease;
+}
+
+#close-btn {
+    background-color: var(--key-color);
+}
+
+.modal-footer button:hover {
+    transform: scale(1.25);
 }

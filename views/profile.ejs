@@ -12,6 +12,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.5.0/sql-wasm.js"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
@@ -59,7 +61,8 @@
                                 <form method="post">
                                     <input formaction="/openphoto" type="submit" id="<%= photo %>" value="О"
                                         style="display: none;">
-                                    <input formaction="/deletephoto" type="submit" value="x" class="delete-btn" />
+                                    <button type="submit" formaction="/deletephoto" class="delete-btn"><i
+                                            class="bi bi-x"></i></button>
                                     <textarea name="namephoto" style="display: none;"><%= photo %></textarea>
                                 </form>
                                 <div class="photo-frame">

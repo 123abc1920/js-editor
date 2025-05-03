@@ -217,20 +217,20 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Установить размер файла</h5>
+                    <p class="modal-title" id="exampleModalLabel">Установить размер файла</p>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body clearfix">
                     <div class="row">
-                        <textarea class="form-control" rows="1" id="width" placeholder="Ширина"></textarea>
+                        <input class="form-control dialog-input" id="width" placeholder="Ширина" />
                     </div>
                     <div class="row">
-                        <textarea class="form-control" rows="1" id="height" placeholder="Высота"></textarea>
+                        <input class="form-control dialog-input" id="height" placeholder="Высота" />
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                    <button type="button" class="btn btn-primary" onclick="createFile();">Создать</button>
+                    <button type="button" onclick="createFile();">Создать</button>
+                    <button type="button" data-bs-dismiss="modal" id="close-btn">Закрыть</button>
                 </div>
             </div>
         </div>

@@ -238,13 +238,37 @@
         </div>
     </div>
 
+    <div class="modal fade" id="infomodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title" id="exampleModalLabel">Сохранять здесь могут только зарегистрированные
+                        пользователи.</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-bs-dismiss="modal" id="close-btn">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
+        function getCookie(name) {
+            const fullCookieString = '; ' + document.cookie;
+            const splitCookie = fullCookieString.split('; ' + name + '=');
+            return splitCookie.length === 2 ? splitCookie.pop().split(';').shift() : null;
+        }
+
         const { jsPDF } = window.jspdf;
         window.savePDF = function () {
-            const pdf = new jsPDF();
-            var canvas = document.getElementById("canvas");
-            pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0);
-            pdf.save('image.pdf');
+            var imgHere = getCookie("imgHere");
+            if (imgHere) {
+                const pdf = new jsPDF();
+                var canvas = document.getElementById("canvas");
+                pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0);
+                pdf.save('image.pdf');
+            }
         }
     </script>
     <script src="../public/js/params.js"></script>

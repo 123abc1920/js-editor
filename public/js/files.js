@@ -7,9 +7,15 @@ var img = null;
 var imgWidth = 1000;
 var imgHeight = 1000;
 
+var imgHere = false;
+var cookie = getCookie("imgHere");
+if (cookie) {
+    imgHere = true;
+}
+
 function openFile(event) {
     event.preventDefault();
-
+    document.cookie = 'current_file=; Max-Age=-1;';
     const pickerOpts = { types: [{ accept: { "image/*": [".gif", ".jpeg", ".jpg"] } }] };
     window.showOpenFilePicker(pickerOpts).then(fileHandles => {
         return fileHandles[0].getFile();
@@ -31,6 +37,9 @@ function createFile() {
 }
 
 function newFile(width, height) {
+    imgHere = true;
+    document.cookie = "imgHere=true";
+    document.cookie = 'current_file=; Max-Age=-1;';
     imgHeight = height;
     imgWidth = width;
     img = null;
@@ -61,42 +70,53 @@ function newFile(width, height) {
 
 function saveFile(event, type) {
     event.preventDefault();
-    let link;
-    if (type == "png") {
-        link = document.createElement('a');
-        let dataUrl = canvas.toDataURL('image/png', 0.5);
-        link.href = dataUrl;
-        link.download = 'image.png';
-    }
-    if (type == "jpeg") {
-        link = document.createElement('a');
-        let dataUrl = canvas.toDataURL('image/jpeg', 0.5);
-        link.href = dataUrl;
-        link.download = 'image.jpeg';
-    }
-    if (type == "server") {
-        let dataUrl = canvas.toDataURL('image/png', 0.5);
-        const form = document.createElement('form');
-        form.action = '/upload';
-        form.method = 'POST';
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.name = 'img';
-        input.value = dataUrl;
+    if (imgHere) {
+        let link;
+        if (type == "png") {
+            link = document.createElement('a');
+            let dataUrl = canvas.toDataURL('image/png', 0.5);
+            link.href = dataUrl;
+            link.download = 'image.png';
+        }
+        if (type == "jpeg") {
+            link = document.createElement('a');
+            let dataUrl = canvas.toDataURL('image/jpeg', 0.5);
+            link.href = dataUrl;
+            link.download = 'image.jpeg';
+        }
+        if (type == "server") {
+            var username = getCookie("username");
+            if (username) {
+                let dataUrl = canvas.toDataURL('image/png', 0.5);
+                const form = document.createElement('form');
+                form.action = '/upload';
+                form.method = 'POST';
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.name = 'img';
+                input.value = dataUrl;
 
-        form.appendChild(input);
-        document.body.appendChild(form);
-        form.submit();
-        form.remove();
-    }
-    if (link) {
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+                form.remove();
+            } else {
+                console.log("jjjj");
+                let modal = new bootstrap.Modal(document.getElementById("infomodal"));
+                modal.show();
+            }
+        }
+        if (link) {
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     }
 }
 
 function openImg(url) {
+    imgHere = true;
+    document.cookie = "imgHere=true";
     img = new Image();
     img.src = url;
     canvas.width = 100;
@@ -135,30 +155,32 @@ function resizeCanvas(event, value) {
 
     scalingCanvas = value / 100;
 
-    var imgPanel = document.getElementById("imgPanel");
-    const rect = imgPanel.getBoundingClientRect();
-    var rectWidth = rect.width * scalingCanvas;
-    var rectHeight = rect.height * scalingCanvas;
-    var scale = Math.min(rectWidth / imgWidth, rectHeight / imgHeight);
-    var newWidth;
-    var newHeight;
-    if (imgWidth > imgHeight) {
-        newWidth = rectWidth;
-        newHeight = imgHeight * scale;
-    } else if (imgWidth <= imgHeight) {
-        newHeight = rectHeight;
-        newWidth = imgWidth * scale;
-    }
+    if (imgHere) {
+        var imgPanel = document.getElementById("imgPanel");
+        const rect = imgPanel.getBoundingClientRect();
+        var rectWidth = rect.width * scalingCanvas;
+        var rectHeight = rect.height * scalingCanvas;
+        var scale = Math.min(rectWidth / imgWidth, rectHeight / imgHeight);
+        var newWidth;
+        var newHeight;
+        if (imgWidth > imgHeight) {
+            newWidth = rectWidth;
+            newHeight = imgHeight * scale;
+        } else if (imgWidth <= imgHeight) {
+            newHeight = rectHeight;
+            newWidth = imgWidth * scale;
+        }
 
-    canvas.width = newWidth;
-    canvas.height = newHeight;
-    ctx = canvas.getContext("2d");
-    if (img != null) {
-        ctx.drawImage(img, 0, 0, imgWidth, imgHeight, 0, 0, newWidth, newHeight);
-    } else {
-        ctx.fillStyle = "white";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+        ctx = canvas.getContext("2d");
+        if (img != null) {
+            ctx.drawImage(img, 0, 0, imgWidth, imgHeight, 0, 0, newWidth, newHeight);
+        } else {
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
 
-    repaint();
+        repaint();
+    }
 }

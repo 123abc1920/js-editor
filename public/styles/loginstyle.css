@@ -19,10 +19,6 @@
     border-radius: 10px;
 }
 
-.login-container:hover{
-    box-shadow: 0px 0px 65px 18px var(--shadow-color);
-}
-
 .login-container p {
     background-color: transparent;
     text-align: start;

@@ -44,21 +44,25 @@ app.post('/reqistr', (req, res) => {
     const username = req.body.username;
     const userpass = req.body.userpass;
 
-    try {
-        stmt = db.prepare('INSERT INTO users (name, password) VALUES (?, ?)');
-        stmt.run(username, userpass);
+    if (!username || !userpass) {
+        res.redirect(`/login`);
+    } else {
+        try {
+            stmt = db.prepare('INSERT INTO users (name, password) VALUES (?, ?)');
+            stmt.run(username, userpass);
 
-        res.send(`
-        <form id="autoSubmitForm" action="/profile" method="POST">
-            <input type="hidden" name="username" value="${username}">
-            <input type="hidden" name="userpass" value="${userpass}">
-        </form>
-        <script>
-            document.getElementById('autoSubmitForm').submit();
-        </script>
-    `);
-    } catch (err) {
-        res.redirect(`/login?failed=${true}`);
+            res.send(`
+            <form id="autoSubmitForm" action="/profile" method="POST">
+                <input type="hidden" name="username" value="${username}">
+                <input type="hidden" name="userpass" value="${userpass}">
+            </form>
+            <script>
+                document.getElementById('autoSubmitForm').submit();
+            </script>
+        `);
+        } catch (err) {
+            res.redirect(`/login?failed=${true}`);
+        }
     }
 });
 
@@ -66,6 +70,10 @@ app.get('/login', (req, res) => {
     res.clearCookie('current_file');
     res.clearCookie('brush');
     res.clearCookie('tool');
+    res.clearCookie('width');
+    res.clearCookie('color');
+    res.clearCookie('imgHere');
+
     var trying = req.query.trying;
     var failed = req.query.failed;
     if (!trying && !failed) {
@@ -95,14 +103,23 @@ app.get('/login', (req, res) => {
     }
 });
 
-app.post("/upload", function (req, res, next) {
+app.post("/upload", function (req, res) {
     const imageData = req.body.img;
     const base64Data = imageData.replace(/^data:image\/png;base64,/, '');
-
     const date = new Date().toISOString().replace(/[:.-]/g, '');
-    const filename = `image_${date}.png`;
-    current_file = filename;
-    res.cookie('current_file', filename, { maxAge: 86400000 });
+
+    const current_file = req.cookies.current_file;
+
+    var filename;
+    if (current_file) {
+        filename = current_file;
+    } else {
+        filename = `image_${date}.png`;
+        res.cookie('current_file', filename, { maxAge: 86400000 });
+        const username = req.cookies.username;
+        const stmt = db.prepare('INSERT INTO photos (name, photo) VALUES (?, ?)');
+        stmt.run(username, filename);
+    }
 
     const filePath = path.join(__dirname, 'uploads', filename);
     fs.writeFile(filePath, base64Data, 'base64', (err) => {
@@ -111,16 +128,24 @@ app.post("/upload", function (req, res, next) {
         }
     });
 
-    const username = req.cookies.username;
-    const stmt = db.prepare('INSERT INTO photos (name, photo) VALUES (?, ?)');
-    stmt.run(username, filename);
-
     res.redirect("/");
 });
 
-app.post("/delete", function (req, res, next) {
+app.post("/delete", function (req, res) {
     const username = req.cookies.username;
-    var stmt = db.prepare('DELETE FROM photos WHERE name=?');
+
+    var stmt = db.prepare('SELECT * FROM photos WHERE name=?');
+    var rows = stmt.all(username);
+    rows.forEach(row => {
+        const filePath = path.join(__dirname, 'uploads', row.photo);
+        try {
+            fs.unlinkSync(filePath);
+        } catch (err) {
+            console.log("wasnt delete");
+        }
+    });
+
+    stmt = db.prepare('DELETE FROM photos WHERE name=?');
     stmt.run(username);
 
     stmt = db.prepare('DELETE FROM users WHERE name=?');
@@ -137,6 +162,13 @@ app.post("/deletephoto", function (req, res) {
     const username = req.cookies.username;
     var stmt = db.prepare('DELETE FROM photos WHERE photo=?');
     stmt.run(filename);
+
+    const filePath = path.join(__dirname, 'uploads', filename);
+    try {
+        fs.unlinkSync(filePath);
+    } catch (err) {
+        console.log("wasnt delete");
+    }
 
     stmt = db.prepare("SELECT * FROM users WHERE name=?");
     const rows = stmt.all(username);

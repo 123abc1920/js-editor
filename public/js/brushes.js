@@ -295,9 +295,16 @@ brushes.forEach((obj, ind) => {
     brushList.appendChild(button);
 });
 
-resetBrushes(0);
+var i = getCookie("brush");
+if (i) {
+    currentBrush = brushes[i];
+    resetBrushes(i);
+} else {
+    resetBrushes(0);
+}
 
 function btnClick(index) {
     currentBrush = brushes[index];
+    document.cookie = "brush=" + index;
     resetBrushes(index);
 }

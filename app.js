@@ -64,6 +64,8 @@ app.post('/reqistr', (req, res) => {
 
 app.get('/login', (req, res) => {
     res.clearCookie('current_file');
+    res.clearCookie('brush');
+    res.clearCookie('tool');
     var trying = req.query.trying;
     var failed = req.query.failed;
     if (!trying && !failed) {
@@ -84,10 +86,10 @@ app.get('/login', (req, res) => {
             res.render('login', { message: '' });
         }
     } else {
-        if (trying){
+        if (trying) {
             res.render('login', { message: 'Неверный логин или пароль' });
         }
-        if (failed){
+        if (failed) {
             res.render('login', { message: 'Уже есть пользователь с таким именем' });
         }
     }

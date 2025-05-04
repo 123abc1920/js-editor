@@ -9,6 +9,27 @@ var mouse = { x: 0, y: 0 };
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
+var tool = getCookie("tool");
+if (tool == "touching") {
+    touching = true;
+}
+if (tool == "square") {
+    square = true;
+}
+if (tool == "ellips") {
+    ellips = true;
+}
+if (tool == "line") {
+    line = true;
+}
+if (tool == "checkColor") {
+    checkColor = true;
+}
+if (tool == "cover") {
+    cover = true;
+}
+resetColors();
+
 canvas.addEventListener("mousedown", function (e) {
     var BB = canvas.getBoundingClientRect();
     mouse.x = parseInt(e.clientX - BB.left);
@@ -101,6 +122,27 @@ canvas.addEventListener("mouseup", function (e) {
     repaint();
 });
 
+function setTools() {
+    if (touching) {
+        document.cookie = "tool=touching";
+    }
+    if (square) {
+        document.cookie = "tool=square";
+    }
+    if (ellips) {
+        document.cookie = "tool=ellips";
+    }
+    if (line) {
+        document.cookie = "tool=line";
+    }
+    if (checkColor) {
+        document.cookie = "tool=checkColor";
+    }
+    if (cover) {
+        document.cookie = "tool=cover";
+    }
+}
+
 function startDraw(event) {
     touching = !touching;
     ellips = false;
@@ -108,6 +150,7 @@ function startDraw(event) {
     square = false;
     checkColor = false;
     cover = false;
+    setTools();
     resetColors();
 }
 
@@ -118,6 +161,7 @@ function drawSquare(event) {
     line = false;
     checkColor = false;
     cover = false;
+    setTools();
     resetColors();
 }
 
@@ -128,6 +172,7 @@ function drawEllips(event) {
     square = false;
     checkColor = false;
     cover = false;
+    setTools();
     resetColors();
 }
 
@@ -138,6 +183,7 @@ function drawLine(event) {
     touching = false;
     checkColor = false;
     cover = false;
+    setTools();
     resetColors();
 }
 
@@ -148,6 +194,7 @@ function startCheckColor(event) {
     square = false;
     touching = false;
     cover = false;
+    setTools();
     resetColors();
 }
 
@@ -158,6 +205,7 @@ function startCover(event) {
     ellips = false;
     square = false;
     touching = false;
+    setTools();
     resetColors();
 }
 

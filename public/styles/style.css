@@ -172,6 +172,7 @@ main button {
     min-width: 300px;
     height: 100%;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .advanced-tools label {
@@ -363,6 +364,64 @@ button:hover {
     transform: scale(1.25);
 }
 
-.selected-btns{
+.selected-btns {
     background-color: var(--primary-color);
+}
+
+.colorPicker {
+    background: none;
+    border: none;
+    margin: 0;
+    width: 100%;
+}
+
+.colorPicker .twod .bg1,
+.colorPicker .twod .bg2 {
+    width: 100%;
+    height: 100%;
+}
+
+.colorPicker .oned {
+    margin: 0;
+    padding: 0;
+    width: 10%;
+}
+
+.colorPicker .extras {
+    float: unset;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.colorPicker .extras .currentColorContainer {
+    overflow: auto;
+}
+
+.colorPicker .extras .colorFields input {
+    width: 100%;
+    margin-left: 0;
+}
+
+.color label {
+    width: 100%;
+    text-align: start;
+}
+
+.hex {
+    width: 100%;
+}
+
+.colorPicker .extras .hex input {
+    width: 100%;
+}
+
+.colorPicker .extras .currentColor {
+    float: unset;
+}
+
+.colorPicker .extras .currentColorContainer {
+    overflow: auto;
+    width: 100%;
+    text-align: center;
 }

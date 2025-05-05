@@ -65,10 +65,8 @@ canvas.addEventListener("mousedown", function (e) {
             var blue = imgData.data[2];
             var alpha = imgData.data[3];
             var color = "rgb(" + red + ", " + green + ", " + blue + ")";
-            var colorAlpha = "rgb(" + red + ", " + green + ", " + blue + ", " + alpha + ")";
-            $('#color-picker-text').val(color).colorpicker('setValue', color);
-            $('.input-group-addon').css('background-color', color);
-            ctx.strokeStyle = colorAlpha;
+            joe.set(color);
+            ctx.strokeStyle = color;
         }
         if (cover) {
             var imgData = ctx.getImageData(mouse.x, mouse.y, 1, 1);

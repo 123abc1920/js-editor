@@ -123,29 +123,12 @@ class ContrastEffect extends EffectObject {
     update() {
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const data = imageData.data;
-        const contrast_f = (259 * (this.contrast + 255)) / (255 * (259 - this.contrast));
+        const factor = (259 * (this.contrast + 255)) / (255 * (259 - this.contrast));
 
         for (let i = 0; i < data.length; i += 4) {
-            let Red = data[i] / 255.0;
-            let Green = data[i + 1] / 255.0;
-            let Blue = data[i + 2] / 255.0;
-            Red = (((Red - 0.5) * this.contrast) + 0.5) * 255.0;
-            Green = (((Green - 0.5) * this.contrast) + 0.5) * 255.0;
-            Blue = (((Blue - 0.5) * this.contrast) + 0.5) * 255.0;
-
-            let iR = Red;
-            iR = iR > 255 ? 255 : iR;
-            iR = iR < 0 ? 0 : iR;
-            let iG = Green;
-            iG = iG > 255 ? 255 : iG;
-            iG = iG < 0 ? 0 : iG;
-            let iB = Blue;
-            iB = iB > 255 ? 255 : iB;
-            iB = iB < 0 ? 0 : iB;
-
-            data[i] = iR;
-            data[i + 1] = iG;
-            data[i + 2] = iB;
+            data[i] = Math.min(Math.max(factor * (data[i] - 128) + 128, 0), 255);
+            data[i + 1] = Math.min(Math.max(factor * (data[i + 1] - 128) + 128, 0), 255);
+            data[i + 2] = Math.min(Math.max(factor * (data[i + 2] - 128) + 128, 0), 255);
         }
 
         this.imageData = imageData;

@@ -27,7 +27,7 @@ function contrast(event) {
     if (val == 0) {
         return;
     }
-    undo.push(new ContrastEffect());
+    undo.push(new ContrastEffect(val));
     redo.length = 0;
     repaint();
 }

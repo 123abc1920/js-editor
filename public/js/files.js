@@ -16,7 +16,21 @@ if (cookie) {
 function openFile(event) {
     event.preventDefault();
     document.cookie = 'current_file=; Max-Age=-1;';
-    const pickerOpts = { types: [{ accept: { "image/*": [".gif", ".jpeg", ".jpg"] } }] };
+    const pickerOpts = {
+        types: [
+            {
+                description: 'Images (PNG, JPEG, GIF, WEBP)',
+                accept: {
+                    'image/png': ['.png'],
+                    'image/jpeg': ['.jpeg', '.jpg'],
+                    'image/gif': ['.gif'],
+                    'image/webp': ['.webp']
+                },
+            },
+        ],
+        excludeAcceptAllOption: true,
+        multiple: false
+    };
     window.showOpenFilePicker(pickerOpts).then(fileHandles => {
         return fileHandles[0].getFile();
     }).then(file => {
